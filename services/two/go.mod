@@ -2,9 +2,12 @@ module monorepo_test/services/two
 
 go 1.19
 
-require github.com/labstack/echo/v4 v4.9.1
+require (
+	github.com/labstack/echo/v4 v4.9.1
+	monorepo_test/libs/hello v0.0.0-00010101000000-000000000000
+)
 
-replace github.com/earthly/earthly/examples/go-monorepo/libs/hello v0.0.0 => ../../libs/hello
+replace monorepo_test/libs/hello => ../../libs/hello
 
 require (
 	github.com/labstack/gommon v0.4.0 // indirect

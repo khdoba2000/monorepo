@@ -3,7 +3,7 @@ package main
 import (
 	"net/http"
 
-	"monorepo_test/services/one/hello"
+	"monorepo_test/libs/hello"
 
 	"github.com/labstack/echo/v4"
 )
