@@ -8,3 +8,15 @@ all-unit-test:
 all-docker:
     BUILD ./services/one+docker
     BUILD ./services/two+docker
+
+all-release:
+    BUILD ./services/one+release
+    BUILD ./services/two+release
+
+dev-up:
+    LOCALLY
+    RUN docker-compose up
+
+dev-down:
+    LOCALLY
+    RUN docker-compose down

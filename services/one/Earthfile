@@ -19,5 +19,18 @@ unit-test:
 
 docker:
     FROM +compile
-    ENTRYPOINT ["./service-one"]
+    ENTRYPOINT ["./service-one"] 
     SAVE IMAGE service-one:latest
+
+release-tag:
+    FROM golang:1.17-alpine
+    RUN go install github.com/maykonlf/semver-cli/cmd/semver@v1.0.2
+    COPY .semver.yaml .
+    RUN semver get release > version
+    SAVE ARTIFACT version
+
+release:
+    FROM +docker
+    COPY +release-tag/version .
+    ARG VERSION="$(cat version)"
+    SAVE IMAGE --push service-one:$VERSION
