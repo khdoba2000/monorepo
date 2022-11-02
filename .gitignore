@@ -1,5 +1,5 @@
-./bazel-bin
-./bazel-monorepo
-./bazel-out
-./bazel-testlogs
-./.vscode
+bazel-bin
+bazel-monorepo
+bazel-out
+bazel-testlogs
+.vscode

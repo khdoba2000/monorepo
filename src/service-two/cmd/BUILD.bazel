@@ -7,7 +7,7 @@ go_library(
     visibility = ["//visibility:private"],
     deps = [
         "//src/libs/hello",
-        "@com_github_gin_gonic_gin//:go_default_library",
+        "@com_github_gin_gonic_gin//:gin",
     ],
 )
 
