@@ -1,0 +1,8 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "helloInService1",
+    srcs = ["hello.go"],
+    importpath = "monorepo/src/service-one/pkg/helloInService1",
+    visibility = ["//visibility:public"],
+)
