@@ -3,7 +3,7 @@ VERSION 0.6
 deps:
     FROM golang:1.17-alpine
     WORKDIR /libs/hello
-    COPY go.mod go.sum ./
+    COPY go.mod ./
     RUN go mod download
 
 artifact:

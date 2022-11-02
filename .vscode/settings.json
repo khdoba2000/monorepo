@@ -1,5 +1,7 @@
 {
     "gopls": {
         "experimentalWorkspaceModule": true
-    }
+    },
+    "editor.fontSize": 16,
+    "files.autoSave": "onFocusChange"
 }

@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"net/http"
 
 	"monorepo_test/libs/hello"
@@ -14,4 +15,5 @@ func main() {
 		return c.String(http.StatusOK, hello.Greet("World"))
 	})
 	_ = e.Start(":8082")
+	fmt.Println("request recieved to service two")
 }
