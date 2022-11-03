@@ -4,6 +4,9 @@
 # To build
     bazel build //...
 
+# To sync with go mod imports
+    bazel run //:gazelle-update-repos
+
 # To run service1
     bazel run //src/service-one/cmd:cmd          
 
