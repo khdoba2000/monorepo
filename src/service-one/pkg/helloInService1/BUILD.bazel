@@ -6,3 +6,9 @@ go_library(
     importpath = "monorepo/src/service-one/pkg/helloInService1",
     visibility = ["//visibility:public"],
 )
+
+alias(
+    name = "go_default_library",
+    actual = ":helloInService1",
+    visibility = ["//visibility:public"],
+)

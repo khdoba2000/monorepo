@@ -12,3 +12,9 @@ go_test(
     srcs = ["hello_test.go"],
     embed = [":hello"],
 )
+
+alias(
+    name = "go_default_library",
+    actual = ":hello",
+    visibility = ["//visibility:public"],
+)

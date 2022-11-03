@@ -1,6 +1,7 @@
 load("@bazel_gazelle//:def.bzl", "gazelle")
 
 #gazelle:prefix monorepo
+#gazelle:go_naming_convention import_alias
 gazelle(name = "gazelle")
 
 gazelle(
