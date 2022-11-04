@@ -12,8 +12,8 @@
     docker compose up
 
 # To run services in docker container
-    docker run --rm -it -p8000:8080 bazel/src/service-one:image   
-    docker run --rm -it -p8001:8082 bazel/src/service-two:image   
+    docker run --rm -it -p8000:8080 khdoba/src/service-one:image   
+    docker run --rm -it -p8001:8082 khdoba/src/service-two:image   
 
 # To run the whole app
     docker compose up
