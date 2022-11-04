@@ -1,11 +1,11 @@
 version: "3"
 services:
   one:
-    image: khdoba/src/service-one:docker
+    image: khdoba/src/service-one:image
     ports:
       - 8081:8080
   two:
-    image: khdoba/src/service-two:docker
+    image: khdoba/src/service-two:image
     ports:
       - 8082:8082
       

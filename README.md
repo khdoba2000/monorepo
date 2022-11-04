@@ -5,12 +5,15 @@
     bazel build //...
 
 # To create docker image of a service
-    bazel run //src/service-one:docker
-    bazel run //src/service-two:docker    
+    bazel run //src/service-one:image
+    bazel run //src/service-two:image    
+
+# To run all services
+    docker compose up
 
 # To run services in docker container
-    docker run --rm -it -p8000:8080 bazel/src/service-one:docker   
-    docker run --rm -it -p8001:8082 bazel/src/service-two:docker   
+    docker run --rm -it -p8000:8080 bazel/src/service-one:image   
+    docker run --rm -it -p8001:8082 bazel/src/service-two:image   
 
 # To run the whole app
     docker compose up
