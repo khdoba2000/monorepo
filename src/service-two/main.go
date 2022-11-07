@@ -15,5 +15,5 @@ func main() {
 		c.String(http.StatusOK, hello.Greet("World"))
 	})
 	_ = r.Run(":8082")
-	fmt.Println("request recieved to service two")
+	fmt.Println("Request recieved to service two")
 }
