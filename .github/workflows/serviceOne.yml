@@ -1,23 +1,27 @@
 # This workflow will build a golang project
 # For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-go
 
-name: CI
+name: CI-serviceOne
 
 on:
   push:
     branches: [ "main" ]
+    paths:
+      - 'src/service-one'
   pull_request:
     branches: [ "main" ]
+     paths:
+      - 'src/service-one'
 
 jobs:
 
-  build:
+  ServiceOne:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
 
     - name: Build
-      run: bazel build //...
+      run: bazel build //src/service-one
 
     - name: Test
-      run: bazel test //... --test_output=errors  
+      run: bazel test //src/service-one --test_output=errors  
