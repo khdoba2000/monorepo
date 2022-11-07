@@ -5,11 +5,11 @@ on:
   push:
     branches: [ "main" ]
     paths:
-      - 'src/service-two'
+      - 'src/service-two/**'
   pull_request:
     branches: [ "main" ]
     paths:
-      - 'src/service-two'
+      - 'src/service-two/**'
 
 jobs:
   ServiceTwo:
