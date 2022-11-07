@@ -10,7 +10,7 @@ on:
       - 'src/service-one'
   pull_request:
     branches: [ "main" ]
-     paths:
+    paths:
       - 'src/service-one'
 
 jobs:
