@@ -1,0 +1,28 @@
+name: CI-apiGateway
+
+on:
+  push:
+    branches: [ "main" ]
+    paths:
+      - 'src/api_gateway/**'
+  pull_request:
+    branches: [ "main" ]
+    paths:
+      - 'src/api_gateway/**'
+
+jobs:
+
+  ServiceTwo:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Test
+      run: bazel test //src/api_gateway/...  --test_output=errors    
+
+    - name: Build
+      run: bazel build //src/api_gateway
+    
+    - name: Create Docker image
+      run: bazel run //src/api_gateway:image
+
