@@ -22,6 +22,7 @@ jobs:
       run: bazel test //src/service-one/...  --test_output=errors   
 
     - name: Build
-      run: 
-        - bazel build //src/service-one
-        - bazel run //src/service-one:image  
+      run: bazel build //src/service-one
+      
+    - name: Create Docker image
+      run: bazel run //src/service-one:image  

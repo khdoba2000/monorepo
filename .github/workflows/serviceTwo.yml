@@ -12,6 +12,7 @@ on:
       - 'src/service-two/**'
 
 jobs:
+
   ServiceTwo:
     runs-on: ubuntu-latest
     steps:
@@ -21,7 +22,8 @@ jobs:
       run: bazel test //src/service-two/...  --test_output=errors    
 
     - name: Build
-      run: 
-        - bazel build //src/service-two
-        - bazel run //src/service-two:image
+      run: bazel build //src/service-two
+    
+    - name: Create Docker image
+      run: bazel run //src/service-two:image
 
