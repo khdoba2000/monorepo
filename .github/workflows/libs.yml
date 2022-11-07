@@ -1,0 +1,25 @@
+
+name: CI-libs
+
+on:
+  push:
+    branches: [ "main" ]
+    paths:
+      - 'src/libs/**'
+  pull_request:
+    branches: [ "main" ]
+    paths:
+      - 'src/libs/**'
+
+jobs:
+
+  Libs:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Build
+      run: bazel build //src/libs/...
+
+    - name: Test
+      run: bazel test //src/libs/...     
