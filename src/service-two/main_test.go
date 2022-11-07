@@ -15,7 +15,7 @@ func TestService(t *testing.T) {
 	if err != nil {
 		t.Fatalf("unexpected error %s", err)
 	}
-	expected := "Hello, Worldss!"
+	expected := "Hello, World!"
 	actual, _ := ioutil.ReadAll(resp.Body)
 	if expected != string(actual) {
 		fmt.Println("expected", expected)
