@@ -18,8 +18,10 @@ jobs:
     steps:
     - uses: actions/checkout@v3
 
-    - name: Build
-      run: bazel build //src/service-one
-
     - name: Test
-      run: bazel test //src/service-one/...  --test_output=errors     
+      run: bazel test //src/service-one/...  --test_output=errors   
+
+    - name: Build
+      run: 
+        - bazel build //src/service-one
+        - bazel run //src/service-one:image  
