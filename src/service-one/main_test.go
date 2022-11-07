@@ -19,7 +19,7 @@ func TestSrvice(t *testing.T) {
 	actual, _ := ioutil.ReadAll(resp.Body)
 	if expected != string(actual) {
 		fmt.Println("expected", expected)
-		fmt.Println("actual", actual)
+		fmt.Println("actual", string(actual))
 		t.Fail()
 	}
 
