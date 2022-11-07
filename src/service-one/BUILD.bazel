@@ -36,7 +36,7 @@ load("@io_bazel_rules_docker//container:container.bzl", "container_image")
 container_image(
     name = "image",
     base = ":go_image",
-    repository = "khdoba" ## Replace <khdoba> with your DockerHub ID, or any repository ID:
+    repository = "khdoba",  ## Replace <khdoba> with your DockerHub ID, or any repository ID:
 )
 
 load("@io_bazel_rules_docker//container:container.bzl", "container_push")
@@ -45,7 +45,6 @@ container_push(
     name = "image-push",
     format = "Docker",
     image = ":image",
-    registry = "index.docker.io", ## Replace <index.docker.io> with your docker registry
-    repository = "khdoba/service-one", ## Replace <khdoba/service-one> with repository path
+    registry = "index.docker.io",  ## Replace <index.docker.io> with your docker registry
+    repository = "khdoba/service-one",  ## Replace <khdoba/service-one> with repository path
 )
-
