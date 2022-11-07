@@ -1,0 +1,23 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "logger",
+    srcs = [
+        "const.go",
+        "logger.go",
+        "util.go",
+        "zap.go",
+    ],
+    importpath = "monorepo/src/libs/logger",
+    visibility = ["//visibility:public"],
+    deps = [
+        "@org_uber_go_zap//:zap",
+        "@org_uber_go_zap//zapcore",
+    ],
+)
+
+alias(
+    name = "go_default_library",
+    actual = ":logger",
+    visibility = ["//visibility:public"],
+)

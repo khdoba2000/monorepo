@@ -1,4 +1,4 @@
-load("@io_bazel_rules_go//go:def.bzl", "go_binary", "go_library", "go_test")
+load("@io_bazel_rules_go//go:def.bzl", "go_binary", "go_library")
 
 go_library(
     name = "api_gateway_lib",
@@ -6,8 +6,11 @@ go_library(
     importpath = "monorepo/src/api_gateway",
     visibility = ["//visibility:private"],
     deps = [
-        "//src/libs/hello",
-        "@com_github_gin_gonic_gin//:gin",
+        "//src/api_gateway/handlers",
+        "//src/api_gateway/logger",
+        "//src/api_gateway/routers",
+        "@org_uber_go_fx//:fx",
+        "@org_uber_go_fx//fxevent",
     ],
 )
 
@@ -15,10 +18,4 @@ go_binary(
     name = "api_gateway",
     embed = [":api_gateway_lib"],
     visibility = ["//visibility:public"],
-)
-
-go_test(
-    name = "api_gateway_test",
-    srcs = ["main_test.go"],
-    embed = [":api_gateway_lib"],
 )

@@ -1,0 +1,26 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "utils",
+    srcs = [
+        "jwt_generator.go",
+        "jwt_parser.go",
+        "web_utils.go",
+    ],
+    importpath = "monorepo/src/api_gateway/utils",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//src/api_gateway/configs",
+        "//src/libs/jwt",
+        "@com_github_dgrijalva_jwt_go//:jwt-go",
+        "@com_github_google_uuid//:uuid",
+        "@org_golang_google_grpc//codes",
+        "@org_golang_google_grpc//status",
+    ],
+)
+
+alias(
+    name = "go_default_library",
+    actual = ":utils",
+    visibility = ["//visibility:public"],
+)

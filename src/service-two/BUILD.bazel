@@ -1,4 +1,4 @@
-load("@io_bazel_rules_go//go:def.bzl", "go_binary", "go_library", "go_test")
+load("@io_bazel_rules_go//go:def.bzl", "go_binary", "go_library")
 
 go_library(
     name = "service-two_lib",
@@ -15,12 +15,6 @@ go_binary(
     name = "service-two",
     embed = [":service-two_lib"],
     visibility = ["//visibility:public"],
-)
-
-go_test(
-    name = "service-two_test",
-    srcs = ["main_test.go"],
-    embed = [":service-two_lib"],
 )
 
 load("@io_bazel_rules_docker//go:image.bzl", "go_image")

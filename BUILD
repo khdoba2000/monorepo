@@ -10,7 +10,7 @@ gazelle(
         "-from_file=go.mod",
         "-to_macro=deps.bzl%go_dependencies",
         "-prune",
-        "-build_file_proto_mode=disable_global",
+        ## "-build_file_proto_mode=disable_global",
     ],
     command = "update-repos",
 )

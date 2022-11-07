@@ -1,0 +1,18 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "handlers",
+    srcs = ["handler.go"],
+    importpath = "monorepo/src/api_gateway/handlers",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//src/api_gateway/handlers/auth_handler",
+        "//src/api_gateway/handlers/customer_handler",
+    ],
+)
+
+alias(
+    name = "go_default_library",
+    actual = ":handlers",
+    visibility = ["//visibility:public"],
+)

@@ -1,4 +1,4 @@
-load("@io_bazel_rules_go//go:def.bzl", "go_binary", "go_library", "go_test")
+load("@io_bazel_rules_go//go:def.bzl", "go_binary", "go_library")
 
 go_library(
     name = "auth_service_lib",
@@ -15,10 +15,4 @@ go_binary(
     name = "auth_service",
     embed = [":auth_service_lib"],
     visibility = ["//visibility:public"],
-)
-
-go_test(
-    name = "auth_service_test",
-    srcs = ["main_test.go"],
-    embed = [":auth_service_lib"],
 )

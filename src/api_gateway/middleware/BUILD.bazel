@@ -1,0 +1,23 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "middleware",
+    srcs = [
+        "auth.go",
+        "logging.go",
+        "recover.go",
+    ],
+    importpath = "monorepo/src/api_gateway/middleware",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//src/api_gateway/configs",
+        "//src/libs/jwt",
+        "@com_github_casbin_casbin_v2//:casbin",
+    ],
+)
+
+alias(
+    name = "go_default_library",
+    actual = ":middleware",
+    visibility = ["//visibility:public"],
+)

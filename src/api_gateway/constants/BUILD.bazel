@@ -1,0 +1,14 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "constants",
+    srcs = ["error.go"],
+    importpath = "monorepo/src/api_gateway/constants",
+    visibility = ["//visibility:public"],
+)
+
+alias(
+    name = "go_default_library",
+    actual = ":constants",
+    visibility = ["//visibility:public"],
+)
