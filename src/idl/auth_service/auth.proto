@@ -1,8 +1,6 @@
 syntax="proto3";
 
-package idl;
-
-option go_package = "monorepo/src/auth_service/src/idl";
+package auth_service;
 
 
 service AuthService {

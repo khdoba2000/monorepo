@@ -41,6 +41,10 @@
 # To run all tests
     bazel test //... --test_output=errors  
 
+# To show a list of collable targets
+    bazel query //src/... --output label_kind | sort | column -t
+
+
 
 
 # To disable auto proto generation add '# gazelle:proto disable_global' to root BUILD file
