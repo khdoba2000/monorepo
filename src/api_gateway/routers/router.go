@@ -6,6 +6,7 @@ import (
 	"github.com/gorilla/mux"
 )
 
-func RegisterAuthRoutes(mux *mux.Router, h *handlers.Handlers) {
-	mux.HandleFunc("/test1", h.AuthHandlers.TestHandler)
+func RegisterAuthRoutes(r *mux.Router, h *handlers.Handlers) {
+	r = r.PathPrefix("/auth").Subrouter()
+	r.HandleFunc("/test1", h.AuthHandlers.TestHandler)
 }

@@ -1,4 +1,3 @@
-p, any, /swagger/*, GET
 p, any, /api/, GET 
 p, unauthorized, /api/v1/media/upload-file/, POST
 p, unauthorized, /api/v1/register/signup/, POST

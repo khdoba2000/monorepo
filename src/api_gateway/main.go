@@ -13,6 +13,7 @@ import (
 	"github.com/gorilla/mux"
 	"go.uber.org/fx"
 	"go.uber.org/fx/fxevent"
+	"go.uber.org/zap"
 )
 
 func NewMux(lc fx.Lifecycle, logger *log.Logger) *mux.Router {
@@ -26,14 +27,16 @@ func NewMux(lc fx.Lifecycle, logger *log.Logger) *mux.Router {
 	// First, we construct the mux and server. We don't want to start the server
 	// until all handlers are registered.
 	root := mux.NewRouter()
+
+	root = root.PathPrefix("/api").Subrouter()
 	root.Use(middleware.Tracer)
 	root.Use(middleware.PanicRecovery)
 	root.Use(middleware.Logging)
-	// casbinJWTRoleAuthorizer, err := middleware.NewCasbinJWTRoleAuthorizer(conf)
-	// if err != nil {
-	// 	logger.Fatal("Could not initialize Cabin JWT Role Authorizer", zap.Error(err))
-	// }
-	// root.Use(casbinJWTRoleAuthorizer.Middleware)
+	casbinJWTRoleAuthorizer, err := middleware.NewCasbinJWTRoleAuthorizer(conf)
+	if err != nil {
+		logger.Fatal("Could not initialize Cabin JWT Role Authorizer", zap.Error(err))
+	}
+	root.Use(casbinJWTRoleAuthorizer.Middleware)
 
 	server := &http.Server{
 		Addr:    ":8083",

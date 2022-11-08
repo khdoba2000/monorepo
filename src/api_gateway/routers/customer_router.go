@@ -6,6 +6,7 @@ import (
 	"github.com/gorilla/mux"
 )
 
-func RegisterCustomerRoutes(mux *mux.Router, h *handlers.Handlers) {
-	mux.HandleFunc("/test2", h.CustomerHandlers.TestHandler2)
+func RegisterCustomerRoutes(r *mux.Router, h *handlers.Handlers) {
+	r = r.PathPrefix("/customer").Subrouter()
+	r.HandleFunc("/test2", h.CustomerHandlers.TestHandler2)
 }

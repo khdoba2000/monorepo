@@ -3,6 +3,10 @@ load("@io_bazel_rules_go//go:def.bzl", "go_library")
 go_library(
     name = "configs",
     srcs = ["config.go"],
+    data = [
+        "models.csv",
+        "rbac_model.conf",
+    ],
     importpath = "monorepo/src/api_gateway/configs",
     visibility = ["//visibility:public"],
     deps = ["@com_github_spf13_viper//:viper"],

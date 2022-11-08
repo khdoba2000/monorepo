@@ -14,6 +14,7 @@ go_library(
         "@com_github_gorilla_mux//:mux",
         "@org_uber_go_fx//:fx",
         "@org_uber_go_fx//fxevent",
+        "@org_uber_go_zap//:zap",
     ],
 )
 
