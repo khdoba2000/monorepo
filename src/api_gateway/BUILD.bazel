@@ -6,11 +6,15 @@ go_library(
     importpath = "monorepo/src/api_gateway",
     visibility = ["//visibility:private"],
     deps = [
+        "//src/api_gateway/configs",
         "//src/api_gateway/handlers",
         "//src/api_gateway/logger",
+        "//src/api_gateway/middleware",
         "//src/api_gateway/routers",
+        "@com_github_gorilla_mux//:mux",
         "@org_uber_go_fx//:fx",
         "@org_uber_go_fx//fxevent",
+        "@org_uber_go_zap//:zap",
     ],
 )
 

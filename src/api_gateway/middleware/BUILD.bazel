@@ -6,6 +6,7 @@ go_library(
         "auth.go",
         "logging.go",
         "recover.go",
+        "tracer.go",
     ],
     importpath = "monorepo/src/api_gateway/middleware",
     visibility = ["//visibility:public"],
@@ -13,6 +14,10 @@ go_library(
         "//src/api_gateway/configs",
         "//src/libs/jwt",
         "@com_github_casbin_casbin_v2//:casbin",
+        "@com_github_opentracing_opentracing_go//:opentracing-go",
+        "@com_github_opentracing_opentracing_go//ext",
+        "@com_github_uber_jaeger_client_go//:jaeger-client-go",
+        "@com_github_uber_jaeger_client_go//config",
     ],
 )
 

@@ -2,9 +2,10 @@ package routers
 
 import (
 	"monorepo/src/api_gateway/handlers"
-	"net/http"
+
+	"github.com/gorilla/mux"
 )
 
-func RegisterCustomerRoutes(mux *http.ServeMux, h *handlers.Handlers) {
+func RegisterCustomerRoutes(mux *mux.Router, h *handlers.Handlers) {
 	mux.HandleFunc("/test2", h.CustomerHandlers.TestHandler2)
 }

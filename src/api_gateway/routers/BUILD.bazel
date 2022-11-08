@@ -8,7 +8,10 @@ go_library(
     ],
     importpath = "monorepo/src/api_gateway/routers",
     visibility = ["//visibility:public"],
-    deps = ["//src/api_gateway/handlers"],
+    deps = [
+        "//src/api_gateway/handlers",
+        "@com_github_gorilla_mux//:mux",
+    ],
 )
 
 alias(
