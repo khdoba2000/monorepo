@@ -8,6 +8,7 @@ import (
 	"monorepo/src/api_gateway/logger"
 	"monorepo/src/api_gateway/middleware"
 	"monorepo/src/api_gateway/routers"
+	"monorepo/src/api_gateway/tracer"
 	"net/http"
 
 	"github.com/gorilla/mux"
@@ -29,7 +30,6 @@ func NewMux(lc fx.Lifecycle, logger *log.Logger) *mux.Router {
 	root := mux.NewRouter()
 
 	root = root.PathPrefix("/api").Subrouter()
-	root.Use(middleware.Tracer)
 	root.Use(middleware.PanicRecovery)
 	root.Use(middleware.Logging)
 	casbinJWTRoleAuthorizer, err := middleware.NewCasbinJWTRoleAuthorizer(conf)
@@ -65,6 +65,7 @@ func main() {
 	app := fx.New(
 		fx.Provide(
 			logger.NewLogger,
+			tracer.New,
 			handlers.New,
 			NewMux,
 		),
