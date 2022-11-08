@@ -23,6 +23,6 @@ jobs:
     - name: Build
       run: bazel build //src/api_gateway
     
-    - name: Create Docker image
-      run: bazel run //src/api_gateway:image
+    # - name: Create Docker image
+    #   run: bazel run //src/api_gateway:image
 

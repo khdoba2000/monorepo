@@ -1,4 +1,4 @@
-p, any, /api/, GET 
+p, any, /api/*, GET 
 p, unauthorized, /api/v1/media/upload-file/, POST
 p, unauthorized, /api/v1/register/signup/, POST
 p, unauthorized, /api/v1/register/send-verification-code/, POST
