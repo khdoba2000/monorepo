@@ -1,4 +1,4 @@
-load("@io_bazel_rules_go//go:def.bzl", "go_binary", "go_library", "go_test")
+load("@io_bazel_rules_go//go:def.bzl", "go_binary", "go_library")
 
 go_library(
     name = "service-one_lib",
@@ -47,16 +47,4 @@ container_push(
     image = ":image",
     registry = "index.docker.io",  ## Replace <index.docker.io> with your docker registry
     repository = "khdoba/service-one",  ## Replace <khdoba/service-one> with repository path
-)
-
-go_test(
-    name = "service-one_test",
-    srcs = ["main_test.go"],
-    embed = [":service-one_lib"],
-    deps = [
-        "@com_github_opentracing_opentracing_go//:opentracing-go",
-        "@com_github_opentracing_opentracing_go//ext",
-        "@com_github_uber_jaeger_client_go//:jaeger-client-go",
-        "@com_github_uber_jaeger_client_go//config",
-    ],
 )
