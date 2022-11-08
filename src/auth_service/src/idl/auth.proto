@@ -1,0 +1,42 @@
+syntax="proto3";
+
+package idl;
+
+option go_package = "monorepo/src/auth_service/src/idl";
+
+
+service AuthService {
+    rpc CustomerLogin(CustomerLoginRequest) returns (AuthResponse){}
+    rpc CustomerSignUp(CustomerSignUpRequest) returns (AuthResponse){}
+    rpc StaffLogin(StaffLoginRequest) returns (AuthResponse){}
+    rpc StaffSignUp(StaffSignUpRequest) returns (AuthResponse){}
+}
+
+message AuthResponse {
+    string accessToken = 1;
+    string refreshToken = 2;
+}
+
+message CustomerLoginRequest{
+    string phoneNumber = 1;
+    string email = 2;
+}
+
+message CustomerSignUpRequest {
+    string name = 1;
+    string email = 2;
+    string phoneNumber = 3;
+}
+
+message StaffLoginRequest {
+    string username = 1;
+    string password = 2;
+    string phoneNumber = 3;
+}
+
+message StaffSignUpRequest {
+    string name = 1;
+    string username = 2;
+    string password = 3;
+    string phoneNumber = 4;
+}
