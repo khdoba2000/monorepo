@@ -10,8 +10,8 @@ import (
 	"github.com/aws/aws-sdk-go/service/s3"
 	"github.com/gomodule/redigo/redis"
 
-	repo "monorepo/src/libs/redis"
 	"monorepo/src/api_gateway/configs"
+	repo "monorepo/src/libs/redis"
 )
 
 // Container ...
@@ -65,5 +65,5 @@ func redisPool() repo.InMemoryStorageI {
 		},
 	}
 
-	return rds.NewRedisRepo(&pool)
+	return repo.NewRedisRepo(&pool)
 }
