@@ -3,6 +3,7 @@ package auth_handler
 import (
 	"log"
 	"net/http"
+	// "monorepo/src/api_gateway/ci"
 )
 
 type AuthHandlers interface {
@@ -20,4 +21,8 @@ func New(logger *log.Logger) AuthHandlers {
 func (ah *authHandler) TestHandler(w http.ResponseWriter, r *http.Request) {
 	// ah.Logger.Print("Got a request.")
 	w.Write([]byte("Hello, World1!"))
+}
+
+func (ah *authHandler) SendSMS(w http.ResponseWriter, r *http.Request) {
+	// container := ci.Get()
 }
