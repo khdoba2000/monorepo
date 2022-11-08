@@ -1,25 +1,26 @@
+load("@golink//proto:proto.bzl", "go_proto_link")
 load("@rules_proto//proto:defs.bzl", "proto_library")
 load("@io_bazel_rules_go//go:def.bzl", "go_library")
 load("@io_bazel_rules_go//proto:def.bzl", "go_proto_library")
 
 proto_library(
-    name = "idl_proto",
+    name = "auth_service_proto",
     srcs = ["auth.proto"],
     visibility = ["//visibility:public"],
 )
 
 go_proto_library(
-    name = "idl_go_proto",
+    name = "auth_service_go_proto",
     compilers = ["@io_bazel_rules_go//proto:go_grpc"],
-    importpath = "monorepo/src/idl",
-    proto = ":idl_proto",
+    importpath = "monorepo/src/idl/auth_service",
+    proto = ":auth_service_proto",
     visibility = ["//visibility:public"],
 )
 
 go_library(
-    name = "idl",
-    embed = [":idl_go_proto"],
-    importpath = "monorepo/src/idl",
+    name = "auth_service",
+    embed = [":auth_service_go_proto"],
+    importpath = "monorepo/src/idl/auth_service",
     visibility = ["//visibility:public"],
 )
 
@@ -29,17 +30,8 @@ alias(
     visibility = ["//visibility:public"],
 )
 
-go_proto_library(
-    name = "auth_service_go_proto",
-    compilers = ["@io_bazel_rules_go//proto:go_grpc"],
-    importpath = "monorepo/src/idl/auth_service",
-    proto = ":idl_proto",
-    visibility = ["//visibility:public"],
-)
-
-go_library(
-    name = "auth_service",
-    embed = [":auth_service_go_proto"],
-    importpath = "monorepo/src/idl/auth_service",
-    visibility = ["//visibility:public"],
+go_proto_link(
+    name = "auth_service_go_proto_link",
+    dep = ":auth_service_go_proto",
+    version = "v1",
 )

@@ -1,5 +1,13 @@
+# setup
+    install direnv
+    add 'eval "$(direnv hook zsh)"' to your ~/.zshrc file. Other shell options at - https://direnv.net/docs/hook.html
+
+
 # To run gazelle
     bazel run //:gazelle
+
+# To generate protos
+    bazel query 'kind("proto_link", //...)'  | xargs bazel runs
 
 # To build
     bazel build //...

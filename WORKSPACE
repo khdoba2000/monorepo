@@ -78,3 +78,12 @@ load(
 )
 
 _go_image_repos()
+
+load("@bazel_tools//tools/build_defs/repo:git.bzl", "git_repository")
+
+http_archive(
+    name = "golink",
+    urls = ["https://github.com/nikunjy/golink/archive/v1.1.0.tar.gz"],
+    sha256 = "c505a82b7180d4315bbaf05848e9b7d2683e80f1b16159af51a0ecae6fb2d54d",
+    strip_prefix = "golink-1.1.0",
+)
