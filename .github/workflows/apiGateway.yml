@@ -17,8 +17,8 @@ jobs:
     steps:
     - uses: actions/checkout@v3
 
-    - name: Test
-      run: bazel test //src/api_gateway/...  --test_output=errors    
+    #- name: Test
+    #  run: bazel test //src/api_gateway/...  --test_output=errors    
 
     - name: Build
       run: bazel build //src/api_gateway
