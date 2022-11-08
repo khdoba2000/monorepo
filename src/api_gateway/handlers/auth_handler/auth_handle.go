@@ -3,6 +3,7 @@ package auth_handler
 import (
 	"log"
 	"net/http"
+	//"monorepo/src/api_gateway/ci"
 	"time"
 
 	"github.com/opentracing/opentracing-go"
@@ -40,4 +41,8 @@ func (ah *authHandler) TestHandler(w http.ResponseWriter, r *http.Request) {
 	// send this ctx to services called here
 
 	w.Write([]byte("Hello, World1!"))
+}
+
+func (ah *authHandler) SendSMS(w http.ResponseWriter, r *http.Request) {
+	// container := ci.Get()
 }
