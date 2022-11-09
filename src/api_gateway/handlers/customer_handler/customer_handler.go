@@ -60,36 +60,24 @@ func (ch *customerHandler) SendCodeHandler(w http.ResponseWriter, r *http.Reques
 		return
 	}
 
+	// validate login value
+	if valid := libs.ValidatePhoneOrEmail(body.LoginValue); !valid {
+		utils.HandleBadRequestResponse(w, "invalid login value")
+		return
+	}
+
 	// generate one-time-password
 	code := etc.GenerateCode(4, true)
 
-	// check if request was sent by phone number
-	if body.Phone != "" {
-		// send code to the number
-		if err := libs.SendCodeToPhone(body.Phone, code); err != nil {
-			utils.HandleBadRequestErrWithMessage(w, err, "invalid phone number")
-			return
-		}
-		// set number and code to the redis
-		if err := ch.redisDB.Set(body.Phone, code); err != nil {
-			utils.HandleInternalWithMessage(w, err, "error in setting data to redis")
-			return
-		}
-		// check if request was sent by email
-	} else if body.Email != "" {
-		// send code to the numbe
-		if err := libs.SendCodeToEmail(body.Email, code); err != nil {
-			utils.HandleBadRequestErrWithMessage(w, err, "invalid email")
-			return
-		}
-		// set number and code to the redis
-		if err := ch.redisDB.Set(body.Email, code); err != nil {
-			utils.HandleInternalWithMessage(w, err, "error in setting data to redis")
-			return
-		}
-		// if both body and email are empty thow an error
-	} else if body.Email == "" && body.Phone == "" {
-		utils.HandleBadRequestResponse(w, "neither email nor phone number is provided")
+	// send one-time-password
+	if err := libs.SendCode(body.LoginValue, code); err != nil {
+		utils.HandleBadRequestErrWithMessage(w, err, "invalid phone number")
+		return
+	}
+
+	// save login value and code to the redis
+	if err := ch.redisDB.Set(body.LoginValue, code); err != nil {
+		utils.HandleInternalWithMessage(w, err, "error in setting data to redis")
 		return
 	}
 
@@ -121,48 +109,28 @@ func (ch *customerHandler) VerfyCodeHandler(w http.ResponseWriter, r *http.Reque
 		return
 	}
 
-	// check if request was sent by phone number
-	if body.Phone != "" {
-		// get code associated with given phone number
-		i, err := ch.redisDB.Get(body.Phone)
-		if err != nil {
-			utils.HandleInternalWithMessage(w, err, "error in reading from redis")
-			return
-		}
+	// validate login values
+	if valid := libs.ValidatePhoneOrEmail(body.LoginValue); !valid {
+		utils.HandleBadRequestResponse(w, "invalid login value")
+		return
+	}
 
-		// if the phone number is incorrect or wasn't set before throw error
-		v, ok := i.(string)
-		if !ok || v == "" {
-			utils.HandleBadRequestResponse(w, "phone number is incorrect")
-			return
-		}
-		// if the code is incorrect throw error
-		if body.Code != v || body.Code != "7777" {
-			utils.HandleBadRequestResponse(w, "code is incorrect")
-			return
-		}
-		// check if request was sent by phone number
-	} else if body.Email != "" {
-		// get code associated with given email
-		i, err := ch.redisDB.Get(body.Email)
-		if err != nil {
-			utils.HandleInternalWithMessage(w, err, "error in reading from redis")
-			return
-		}
-		// if the email is incorrect or wasn't set before throw error
-		v, ok := i.(string)
-		if !ok || v == "" {
-			utils.HandleBadRequestResponse(w, "email is incorrect")
-			return
-		}
-		// if the code is incorrect throw error
-		if body.Code != v || body.Code != "7777" {
-			utils.HandleBadRequestResponse(w, "code is incorrect")
-			return
-		}
-		// if both body and email are empty thow an error
-	} else if body.Email == "" && body.Phone == "" {
-		utils.HandleBadRequestResponse(w, "neither email nor phone number is provided")
+	// get code associated with given login value
+	i, err := ch.redisDB.Get(body.LoginValue)
+	if err != nil {
+		utils.HandleInternalWithMessage(w, err, "error in reading from redis")
+		return
+	}
+
+	// if the login value is incorrect or wasn't set before throw an error
+	v, ok := i.(string)
+	if !ok || v == "" {
+		utils.HandleBadRequestResponse(w, "phone number is incorrect")
+		return
+	}
+	// if the code is incorrect throw an error
+	if body.Code != v || body.Code != "7777" {
+		utils.HandleBadRequestResponse(w, "code is incorrect")
 		return
 	}
 

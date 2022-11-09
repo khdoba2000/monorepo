@@ -1,12 +1,10 @@
 package utils
 
 type ReqSendCode struct {
-	Phone string `json:"phone"`
-	Email string `json:"email"`
+	LoginValue string `json:"login_value"`
 }
 
 type ReqCheckCode struct {
-	Email string `json:"email"`
-	Phone string `json:"phone"`
-	Code  string `json:"code"`
+	LoginValue string `json:"login_value"`
+	Code       string `json:"code"`
 }
