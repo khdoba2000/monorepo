@@ -1,7 +1,6 @@
 package customer_handler
 
 import (
-	"log"
 	"monorepo/src/api_gateway/models"
 	"monorepo/src/api_gateway/utils"
 	"monorepo/src/libs/etc"
