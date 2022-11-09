@@ -4,9 +4,6 @@ import (
 	"fmt"
 	"sync"
 
-	"github.com/aws/aws-sdk-go/aws"
-	"github.com/aws/aws-sdk-go/aws/credentials"
-	session "github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/s3"
 	"github.com/gomodule/redigo/redis"
 
@@ -30,18 +27,9 @@ var (
 // Get - get Container instance
 func Get() *Container {
 	once.Do(func() {
-		sess, err := session.NewSession(&aws.Config{
-			// TODO Region should be moved to config
-			Region:      aws.String("ap-south-1"),
-			Credentials: credentials.NewStaticCredentials(cfg.AwsS3Id, cfg.AwsS3Secret, ""),
-		})
 
-		if err != nil {
-			panic(err)
-		}
 		instance = &Container{
 			Redis: redisPool(),
-			S3:    s3.New(sess),
 		}
 	})
 

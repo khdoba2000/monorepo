@@ -10,7 +10,7 @@ go_library(
     visibility = ["//visibility:public"],
     deps = [
         "//src/api_gateway/handlers",
-        "@com_github_gorilla_mux//:mux",
+        "//src/api_gateway/pkg/tracing",
     ],
 )
 

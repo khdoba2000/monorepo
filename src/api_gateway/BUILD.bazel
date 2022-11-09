@@ -3,19 +3,24 @@ load("@io_bazel_rules_go//go:def.bzl", "go_binary", "go_library")
 go_library(
     name = "api_gateway_lib",
     srcs = ["main.go"],
+    data = [
+        ".env",
+    ],
     importpath = "monorepo/src/api_gateway",
     visibility = ["//visibility:private"],
     deps = [
         "//src/api_gateway/configs",
         "//src/api_gateway/handlers",
-        "//src/api_gateway/logger",
-        "//src/api_gateway/middleware",
+        "//src/api_gateway/pkg/log",
+        "//src/api_gateway/pkg/tracing",
         "//src/api_gateway/routers",
-        "//src/api_gateway/tracer",
-        "@com_github_gorilla_mux//:mux",
+        "//src/libs/logger",
+        "@com_github_joho_godotenv//:godotenv",
+        "@com_github_uber_jaeger_lib//metrics/expvar",
         "@org_uber_go_fx//:fx",
         "@org_uber_go_fx//fxevent",
         "@org_uber_go_zap//:zap",
+        "@org_uber_go_zap//zapcore",
     ],
 )
 

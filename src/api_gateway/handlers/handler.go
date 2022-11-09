@@ -1,11 +1,10 @@
 package handlers
 
 import (
-	"log"
+	"fmt"
 	"monorepo/src/api_gateway/handlers/auth_handler"
 	"monorepo/src/api_gateway/handlers/customer_handler"
-
-	"github.com/opentracing/opentracing-go"
+	"monorepo/src/libs/logger"
 )
 
 // Handlers ...
@@ -15,10 +14,11 @@ type Handlers struct {
 }
 
 // New creates handler
-func New(logger *log.Logger, tracer opentracing.Tracer) (*Handlers, error) {
+func New(logger logger.Logger) (*Handlers, error) {
+	fmt.Println("handler New")
 
 	return &Handlers{
-		AuthHandlers:     auth_handler.New(logger, tracer),
-		CustomerHandlers: customer_handler.New(logger, tracer),
+		AuthHandlers:     auth_handler.New(logger),
+		CustomerHandlers: customer_handler.New(logger),
 	}, nil
 }

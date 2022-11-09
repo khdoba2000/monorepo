@@ -8,7 +8,7 @@ go_library(
     deps = [
         "//src/api_gateway/handlers/auth_handler",
         "//src/api_gateway/handlers/customer_handler",
-        "@com_github_opentracing_opentracing_go//:opentracing-go",
+        "//src/libs/logger",
     ],
 )
 

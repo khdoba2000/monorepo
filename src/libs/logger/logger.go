@@ -1,6 +1,7 @@
 package logger
 
 import (
+	"os"
 	"time"
 
 	"go.uber.org/zap"
@@ -42,8 +43,9 @@ var (
 )
 
 // New ...
-func New(level string, namespace string) Logger {
-	if level == "" {
+func New() Logger {
+	level := ""
+	if os.Getenv("LOG_LEVEL") == "" {
 		level = LevelInfo
 	}
 
@@ -51,7 +53,7 @@ func New(level string, namespace string) Logger {
 		zap: newZapLogger(level, time.RFC3339),
 	}
 
-	logger.zap = logger.zap.Named(namespace)
+	logger.zap = logger.zap.Named(os.Getenv("NAMESPACE"))
 
 	zap.RedirectStdLog(logger.zap)
 

@@ -5,6 +5,7 @@ import (
 	"monorepo/src/api_gateway/models"
 	"monorepo/src/api_gateway/utils"
 	"monorepo/src/libs/etc"
+	"monorepo/src/libs/logger"
 	"monorepo/src/libs/redis"
 	libs "monorepo/src/libs/utils"
 	"net/http"
@@ -25,11 +26,8 @@ type customerHandler struct {
 }
 
 // New creates handler
-func New(logger *log.Logger, tracer opentracing.Tracer) CustomerHandlers {
-	return &customerHandler{
-		tracer: tracer,
-		// redisDB: rds,
-	}
+func New(logger logger.Logger) CustomerHandlers {
+	return &customerHandler{}
 }
 func (ch *customerHandler) TestHandler2(w http.ResponseWriter, r *http.Request) {
 	// ch.logger.Print("Got a request.")

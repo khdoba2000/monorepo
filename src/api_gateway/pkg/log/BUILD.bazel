@@ -1,0 +1,26 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "log",
+    srcs = [
+        "factory.go",
+        "logger.go",
+        "spanlogger.go",
+    ],
+    importpath = "monorepo/src/api_gateway/pkg/log",
+    visibility = ["//visibility:public"],
+    deps = [
+        "@com_github_opentracing_opentracing_go//:opentracing-go",
+        "@com_github_opentracing_opentracing_go//ext",
+        "@com_github_opentracing_opentracing_go//log",
+        "@com_github_uber_jaeger_client_go//:jaeger-client-go",
+        "@org_uber_go_zap//:zap",
+        "@org_uber_go_zap//zapcore",
+    ],
+)
+
+alias(
+    name = "go_default_library",
+    actual = ":log",
+    visibility = ["//visibility:public"],
+)

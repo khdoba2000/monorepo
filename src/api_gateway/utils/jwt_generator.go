@@ -49,7 +49,7 @@ func generateNewAccessToken(id string, credentials map[string]string) (string, e
 
 	// Set public claims:
 	claims["id"] = id
-	claims["expires"] = time.Now().Add(time.Minute * time.Duration(conf.JWTSecretKeyExpireMinutes)).Unix()
+	claims["expires"] = time.Now().Add(time.Minute * time.Duration(conf.JWTRefreshKeyExpireHours)).Unix()
 	claims["role"] = credentials["role"]
 	//	// Set private token credentials:
 	//	for _, credential := range credentials {
@@ -58,10 +58,10 @@ func generateNewAccessToken(id string, credentials map[string]string) (string, e
 
 	// in local server access token ttl = 10 days
 	if conf.Environment == "develop" {
-		claims["expires"] = time.Now().Add(time.Minute * time.Duration(10*conf.JWTSecretKeyExpireMinutes)).Unix()
+		claims["expires"] = time.Now().Add(time.Minute * time.Duration(10*conf.JWTRefreshKeyExpireHours)).Unix()
 	} else {
 		// in staging server access token ttl = day
-		claims["expires"] = time.Now().Add(time.Minute * time.Duration(conf.JWTSecretKeyExpireMinutes)).Unix()
+		claims["expires"] = time.Now().Add(time.Minute * time.Duration(conf.JWTRefreshKeyExpireHours)).Unix()
 	}
 	// Create a new JWT access token with claims.
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
@@ -81,7 +81,7 @@ func generateNewRefreshToken() (string, error) {
 	sha256 := sha256.New()
 
 	// Create a new now date and time string with salt.
-	refresh := conf.JWTRefreshKey + time.Now().String()
+	refresh := conf.JWTSecretKey + time.Now().String()
 
 	// See: https://pkg.go.dev/io#Writer.Write
 	_, err := sha256.Write([]byte(refresh))

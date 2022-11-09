@@ -2,11 +2,10 @@ package routers
 
 import (
 	"monorepo/src/api_gateway/handlers"
-
-	"github.com/gorilla/mux"
+	"monorepo/src/api_gateway/pkg/tracing"
+	"net/http"
 )
 
-func RegisterAuthRoutes(r *mux.Router, h *handlers.Handlers) {
-	r = r.PathPrefix("/auth").Subrouter()
-	r.HandleFunc("/test1", h.AuthHandlers.TestHandler)
+func RegisterAuthRoutes(r *tracing.TracedServeMux, h *handlers.Handlers) {
+	r.Handle("/auth/test1", http.HandlerFunc(h.AuthHandlers.TestHandler))
 }
