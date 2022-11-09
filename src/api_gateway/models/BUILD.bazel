@@ -1,19 +1,14 @@
 load("@io_bazel_rules_go//go:def.bzl", "go_library")
 
 go_library(
-    name = "utils",
-    srcs = [
-        "enum.go",
-        "parseTemplate.go",
-        "sms.go",
-        "validate.go",
-    ],
-    importpath = "monorepo/src/libs/utils",
+    name = "models",
+    srcs = ["otp_structure.go"],
+    importpath = "monorepo/src/api_gateway/models",
     visibility = ["//visibility:public"],
 )
 
 alias(
     name = "go_default_library",
-    actual = ":utils",
+    actual = ":models",
     visibility = ["//visibility:public"],
 )

@@ -8,11 +8,11 @@ go_library(
     deps = [
         "//src/api_gateway/configs",
         "//src/libs/redis",
-        "@com_github_aws_aws_sdk_go//aws:go_default_library",
-        "@com_github_aws_aws_sdk_go//aws/credentials:go_default_library",
-        "@com_github_aws_aws_sdk_go//aws/session:go_default_library",
-        "@com_github_aws_aws_sdk_go//service/s3:go_default_library",
-        "@com_github_gomodule_redigo//redis:go_default_library",
+        "@com_github_aws_aws_sdk_go//aws",
+        "@com_github_aws_aws_sdk_go//aws/credentials",
+        "@com_github_aws_aws_sdk_go//aws/session",
+        "@com_github_aws_aws_sdk_go//service/s3",
+        "@com_github_gomodule_redigo//redis",
     ],
 )
 
