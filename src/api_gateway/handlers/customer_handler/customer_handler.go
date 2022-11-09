@@ -25,10 +25,10 @@ type customerHandler struct {
 }
 
 // New creates handler
-func New(logger *log.Logger, tracer opentracing.Tracer, rds redis.InMemoryStorageI) CustomerHandlers {
+func New(logger *log.Logger, tracer opentracing.Tracer) CustomerHandlers {
 	return &customerHandler{
-		tracer:  tracer,
-		redisDB: rds,
+		tracer: tracer,
+		// redisDB: rds,
 	}
 }
 func (ch *customerHandler) TestHandler2(w http.ResponseWriter, r *http.Request) {
