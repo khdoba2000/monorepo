@@ -8,6 +8,10 @@ p, unauthorized, /api/v1/admin/login/, POST
 p, unauthorized, /api/v1/user/reset-password/, POST
 p, user, /api/v1/user/edit-profile/, PUT
 
+p, unauthorized, /auth/sendCode/, POST
+p, unauthorized, /auth/verify/, POST
+p, unauthorized, /auth/login/, POST
+
 g, authorized, any
 g, unauthorized, any
 g, admin, any
