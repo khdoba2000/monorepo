@@ -2,12 +2,12 @@ package customer_handler
 
 import (
 	"log"
+	"monorepo/src/api_gateway/models"
 	"monorepo/src/api_gateway/utils"
 	"monorepo/src/libs/etc"
 	"monorepo/src/libs/redis"
 	libs "monorepo/src/libs/utils"
 	"net/http"
-	"time"
 
 	"github.com/opentracing/opentracing-go"
 	"github.com/opentracing/opentracing-go/ext"
@@ -45,16 +45,8 @@ func (ch *customerHandler) SendCodeHandler(w http.ResponseWriter, r *http.Reques
 	ext.HTTPUrl.Set(sendCodeHandlerSpan, r.URL.Path)
 	ext.HTTPMethod.Set(sendCodeHandlerSpan, "GET")
 
-	// Inject the client span context into the headers
-	//3
-	ch.tracer.Inject(sendCodeHandlerSpan.Context(), opentracing.HTTPHeaders, opentracing.HTTPHeadersCarrier(r.Header))
-	time.Sleep(2 * time.Second)
-
-	// ctx:=opentracing.ContextWithSpan(r.Context(), testHandlerSpan)
-	// send this ctx to services called here
-
 	// read body from request
-	var body utils.ReqSendCode
+	var body models.ReqSendCode
 	if err := utils.BodyParser(r, body); err != nil {
 		utils.HandleBadRequestErrWithMessage(w, err, "invalid body")
 		return
@@ -94,16 +86,8 @@ func (ch *customerHandler) VerfyCodeHandler(w http.ResponseWriter, r *http.Reque
 	ext.HTTPUrl.Set(verfyCodeHandlerSpan, r.URL.Path)
 	ext.HTTPMethod.Set(verfyCodeHandlerSpan, "GET")
 
-	// Inject the client span context into the headers
-	//3
-	ch.tracer.Inject(verfyCodeHandlerSpan.Context(), opentracing.HTTPHeaders, opentracing.HTTPHeadersCarrier(r.Header))
-	time.Sleep(2 * time.Second)
-
-	// ctx:=opentracing.ContextWithSpan(r.Context(), testHandlerSpan)
-	// send this ctx to services called here
-
 	// read body from request
-	var body utils.ReqCheckCode
+	var body models.ReqCheckCode
 	if err := utils.BodyParser(r, body); err != nil {
 		utils.HandleBadRequestErrWithMessage(w, err, "invalid body")
 		return

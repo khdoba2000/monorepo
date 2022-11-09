@@ -1,4 +1,4 @@
-package utils
+package models
 
 type ReqSendCode struct {
 	LoginValue string `json:"login_value"`
