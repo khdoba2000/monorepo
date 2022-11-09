@@ -24,3 +24,27 @@ func IsEmailValid(e string) bool {
 	}
 	return true
 }
+
+var phoneRegex = regexp.MustCompile(`(0|\\+62|062|62)[0-9]+$`)
+
+// IsPhoneValid
+func IsPhoneValid(p string) bool {
+	return phoneRegex.MatchString(p)
+}
+
+// Validate for both email ad phone
+func ValidatePhoneOrEmail(loginValue string) bool {
+	var valid bool
+
+	valid = IsPhoneValid(loginValue)
+	if valid {
+		return true
+	}
+
+	valid = IsEmailValid(loginValue)
+	if valid {
+		return true
+	}
+
+	return false
+}
