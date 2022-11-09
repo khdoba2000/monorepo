@@ -1,0 +1,23 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "ci",
+    srcs = ["container.go"],
+    importpath = "monorepo/src/api_gateway/ci",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//src/api_gateway/configs",
+        "//src/libs/redis",
+        "@com_github_aws_aws_sdk_go//aws:go_default_library",
+        "@com_github_aws_aws_sdk_go//aws/credentials:go_default_library",
+        "@com_github_aws_aws_sdk_go//aws/session:go_default_library",
+        "@com_github_aws_aws_sdk_go//service/s3:go_default_library",
+        "@com_github_gomodule_redigo//redis:go_default_library",
+    ],
+)
+
+alias(
+    name = "go_default_library",
+    actual = ":ci",
+    visibility = ["//visibility:public"],
+)

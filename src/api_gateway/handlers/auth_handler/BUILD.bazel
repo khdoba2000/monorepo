@@ -5,6 +5,10 @@ go_library(
     srcs = ["auth_handle.go"],
     importpath = "monorepo/src/api_gateway/handlers/auth_handler",
     visibility = ["//visibility:public"],
+    deps = [
+        "@com_github_opentracing_opentracing_go//:opentracing-go",
+        "@com_github_opentracing_opentracing_go//ext",
+    ],
 )
 
 alias(
