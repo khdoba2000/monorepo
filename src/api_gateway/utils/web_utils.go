@@ -13,7 +13,7 @@ import (
 	"google.golang.org/grpc/status"
 )
 
-func handleGrpcErrWithMessage(w http.ResponseWriter, err error, args ...interface{}) error {
+func HandleGrpcErrWithMessage(w http.ResponseWriter, err error, args ...interface{}) error {
 	if err == nil {
 		return nil
 	}
@@ -120,7 +120,7 @@ type Error struct {
 	Message string `json:"message"`
 }
 
-func handleInternalWithMessage(w http.ResponseWriter, err error, message string) error {
+func HandleInternalWithMessage(w http.ResponseWriter, err error, message string) error {
 	if err == nil {
 		return nil
 	}
@@ -135,7 +135,7 @@ func handleInternalWithMessage(w http.ResponseWriter, err error, message string)
 	return err
 }
 
-func handleBadRequestErrWithMessage(w http.ResponseWriter, err error, message string) error {
+func HandleBadRequestErrWithMessage(w http.ResponseWriter, err error, message string) error {
 	if err == nil {
 		return nil
 	}
@@ -150,7 +150,7 @@ func handleBadRequestErrWithMessage(w http.ResponseWriter, err error, message st
 	return err
 }
 
-func handleBadRequestResponse(w http.ResponseWriter, message string) {
+func HandleBadRequestResponse(w http.ResponseWriter, message string) {
 	log.Println(message)
 	w.WriteHeader(http.StatusBadRequest)
 	WriteJSON(w, response{Error: true,
