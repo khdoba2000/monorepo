@@ -16,19 +16,18 @@
 package tracing
 
 import (
+	"fmt"
 	"monorepo/src/api_gateway/configs"
 	"monorepo/src/api_gateway/middleware"
-	"monorepo/src/libs/logger"
 	"net/http"
 
 	"github.com/gorilla/mux"
 	"github.com/opentracing-contrib/go-stdlib/nethttp"
 	"github.com/opentracing/opentracing-go"
-	"go.uber.org/zap"
 )
 
 // NewServeMux creates a new TracedServeMux.
-func NewServeMux(tracer opentracing.Tracer, conf *configs.Configuration, logger logger.Logger) *TracedServeMux {
+func NewServeMux(tracer opentracing.Tracer, conf *configs.Configuration) *TracedServeMux {
 	// First, we construct the mux and server. We don't want to start the server
 	// until all handlers are registered.
 	root := mux.NewRouter()
@@ -37,7 +36,9 @@ func NewServeMux(tracer opentracing.Tracer, conf *configs.Configuration, logger 
 	root.Use(middleware.Logging)
 	casbinJWTRoleAuthorizer, err := middleware.NewCasbinJWTRoleAuthorizer(conf)
 	if err != nil {
-		logger.Fatal("Could not initialize Cabin JWT Role Authorizer", zap.Error(err))
+		fmt.Println("CasbinConfigPath:", conf.CasbinConfigPath)
+		fmt.Println("MiddlewareRolesPath:", conf.MiddlewareRolesPath)
+		panic(err)
 	}
 	root.Use(casbinJWTRoleAuthorizer.Middleware)
 

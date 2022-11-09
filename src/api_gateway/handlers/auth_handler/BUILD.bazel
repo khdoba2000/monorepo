@@ -5,7 +5,7 @@ go_library(
     srcs = ["auth_handle.go"],
     importpath = "monorepo/src/api_gateway/handlers/auth_handler",
     visibility = ["//visibility:public"],
-    deps = ["//src/libs/logger"],
+    deps = ["//src/api_gateway/pkg/log"],
 )
 
 alias(

@@ -13,7 +13,6 @@ go_library(
         "//src/api_gateway/configs",
         "//src/api_gateway/middleware",
         "//src/api_gateway/pkg/log",
-        "//src/libs/logger",
         "@com_github_gorilla_mux//:mux",
         "@com_github_opentracing_contrib_go_stdlib//nethttp",
         "@com_github_opentracing_opentracing_go//:opentracing-go",

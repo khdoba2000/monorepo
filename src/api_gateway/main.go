@@ -7,10 +7,8 @@ import (
 	"monorepo/src/api_gateway/pkg/log"
 	"monorepo/src/api_gateway/pkg/tracing"
 	"monorepo/src/api_gateway/routers"
-	"monorepo/src/libs/logger"
 	"net/http"
 
-	"github.com/joho/godotenv"
 	jexpvar "github.com/uber/jaeger-lib/metrics/expvar"
 
 	"go.uber.org/fx"
@@ -19,7 +17,7 @@ import (
 	"go.uber.org/zap/zapcore"
 )
 
-func NewMux(lc fx.Lifecycle, conf *configs.Configuration, logger logger.Logger) *tracing.TracedServeMux {
+func NewMux(lc fx.Lifecycle, conf *configs.Configuration) *tracing.TracedServeMux {
 	metricsFactory := jexpvar.NewFactory(10) // 10 buckets for histograms
 	logger2, _ := zap.NewDevelopment(
 		zap.AddStacktrace(zapcore.FatalLevel),
@@ -28,7 +26,7 @@ func NewMux(lc fx.Lifecycle, conf *configs.Configuration, logger logger.Logger) 
 
 	zapLogger := logger2.With(zap.String("service", "api_gateway"))
 	tracer := tracing.Init("api_gateway", metricsFactory, log.NewFactory(zapLogger))
-	tracerRoot := tracing.NewServeMux(tracer, conf, logger)
+	tracerRoot := tracing.NewServeMux(tracer, conf)
 
 	server := &http.Server{
 		Addr:    conf.HTTPPort,
@@ -37,14 +35,14 @@ func NewMux(lc fx.Lifecycle, conf *configs.Configuration, logger logger.Logger) 
 	lc.Append(fx.Hook{
 
 		OnStart: func(context.Context) error {
-			logger.Info("Starting HTTP server.")
+			// log.Logger.Info("Starting HTTP server.")
 			// In production, we'd want to separate the Listen and Serve phases for
 			// better error-handling.
 			go server.ListenAndServe()
 			return nil
 		},
 		OnStop: func(ctx context.Context) error {
-			logger.Info("Stopping HTTP server.")
+			// logger.Info("Stopping HTTP server.")
 			return server.Shutdown(ctx)
 		},
 	})
@@ -54,17 +52,9 @@ func NewMux(lc fx.Lifecycle, conf *configs.Configuration, logger logger.Logger) 
 
 func main() {
 
-	// load .env file from given path
-	// we keep it empty it will load .env from current directory
-	err := godotenv.Load("src/api_gateway/.env")
-	if err != nil {
-		panic(err)
-	}
-
 	app := fx.New(
 		fx.Provide(
 			configs.Config,
-			logger.New,
 			handlers.New,
 			NewMux,
 		),

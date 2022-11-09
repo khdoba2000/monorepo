@@ -1,10 +1,12 @@
 package handlers
 
 import (
-	"fmt"
 	"monorepo/src/api_gateway/handlers/auth_handler"
 	"monorepo/src/api_gateway/handlers/customer_handler"
-	"monorepo/src/libs/logger"
+	"monorepo/src/api_gateway/pkg/log"
+
+	"go.uber.org/zap"
+	"go.uber.org/zap/zapcore"
 )
 
 // Handlers ...
@@ -14,9 +16,12 @@ type Handlers struct {
 }
 
 // New creates handler
-func New(logger logger.Logger) (*Handlers, error) {
-	fmt.Println("handler New")
-
+func New() (*Handlers, error) {
+	zapLogger, _ := zap.NewDevelopment(
+		zap.AddStacktrace(zapcore.FatalLevel),
+		zap.AddCallerSkip(1),
+	)
+	logger := log.NewFactory(zapLogger)
 	return &Handlers{
 		AuthHandlers:     auth_handler.New(logger),
 		CustomerHandlers: customer_handler.New(logger),

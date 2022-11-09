@@ -2,6 +2,11 @@
     install direnv
     add 'eval "$(direnv hook zsh)"' to your ~/.zshrc file. Other shell options at - https://direnv.net/docs/hook.html
 
+# To run jeager tracer
+    docker run -d -p 6831:6831/udp -p 16686:16686 jaegertracing/all-in-one:latest
+
+ # To see traces open and hit "Find Traces"
+    http://localhost:16686
 
 # To run gazelle
     bazel run //:gazelle

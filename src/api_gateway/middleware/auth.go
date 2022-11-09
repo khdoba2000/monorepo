@@ -23,7 +23,7 @@ func NewCasbinJWTRoleAuthorizer(cfg *configs.Configuration) (*JWTRoleAuthorizer,
 
 	enforcer, err := casbin.NewEnforcer(cfg.CasbinConfigPath, cfg.MiddlewareRolesPath)
 	if err != nil {
-		log.Fatal("could not initialize new enforcer:", err.Error())
+		log.Println("could not initialize new enforcer:", err.Error())
 		return nil, err
 	}
 

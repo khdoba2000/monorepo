@@ -1,7 +1,7 @@
 package auth_handler
 
 import (
-	"monorepo/src/libs/logger"
+	"monorepo/src/api_gateway/pkg/log"
 	"net/http"
 	//"monorepo/src/api_gateway/ci"
 )
@@ -11,14 +11,19 @@ type AuthHandlers interface {
 }
 
 type authHandler struct {
+	logger log.Factory
 }
 
 // New creates auth handlers
-func New(logger logger.Logger) AuthHandlers {
-	return &authHandler{}
+func New(logger log.Factory) AuthHandlers {
+	return &authHandler{
+		logger: logger,
+	}
 }
 
 func (ah *authHandler) TestHandler(w http.ResponseWriter, r *http.Request) {
+
+	ah.logger.For(r.Context()).Info("TestHandler hit")
 	w.Write([]byte("Hello, World1!"))
 }
 

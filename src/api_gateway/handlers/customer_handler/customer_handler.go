@@ -2,9 +2,9 @@ package customer_handler
 
 import (
 	"monorepo/src/api_gateway/models"
+	"monorepo/src/api_gateway/pkg/log"
 	"monorepo/src/api_gateway/utils"
 	"monorepo/src/libs/etc"
-	"monorepo/src/libs/logger"
 	"monorepo/src/libs/redis"
 	libs "monorepo/src/libs/utils"
 	"net/http"
@@ -18,11 +18,14 @@ type CustomerHandlers interface {
 
 type customerHandler struct {
 	redisDB redis.InMemoryStorageI
+	logger  log.Factory
 }
 
 // New creates handler
-func New(logger logger.Logger) CustomerHandlers {
-	return &customerHandler{}
+func New(logger log.Factory) CustomerHandlers {
+	return &customerHandler{
+		logger: logger,
+	}
 }
 func (ch *customerHandler) TestHandler2(w http.ResponseWriter, r *http.Request) {
 	// ch.logger.Print("Got a request.")

@@ -9,7 +9,10 @@ go_library(
     ],
     importpath = "monorepo/src/api_gateway/configs",
     visibility = ["//visibility:public"],
-    deps = ["@com_github_spf13_viper//:viper"],
+    deps = [
+        "@com_github_joho_godotenv//:godotenv",
+        "@com_github_spf13_viper//:viper",
+    ],
 )
 
 alias(

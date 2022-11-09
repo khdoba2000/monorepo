@@ -5,6 +5,7 @@ import (
 	"sync"
 	"time"
 
+	"github.com/joho/godotenv"
 	"github.com/spf13/viper"
 )
 
@@ -52,6 +53,13 @@ type Configuration struct {
 }
 
 func load() *Configuration {
+
+	// load .env file from given path
+	// we keep it empty it will load .env from current directory
+	err := godotenv.Load("src/api_gateway/.env")
+	if err != nil {
+		panic(err)
+	}
 
 	var config Configuration
 
