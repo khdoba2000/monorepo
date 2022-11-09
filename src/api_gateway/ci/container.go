@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"sync"
 
-	"github.com/aws/aws-sdk-go/service/s3"
 	"github.com/gomodule/redigo/redis"
 
 	"monorepo/src/api_gateway/configs"
@@ -14,7 +13,6 @@ import (
 // Container ...
 type Container struct {
 	Redis repo.InMemoryStorageI
-	S3    *s3.S3
 }
 
 var (
