@@ -8,9 +8,6 @@ import (
 	"monorepo/src/libs/redis"
 	libs "monorepo/src/libs/utils"
 	"net/http"
-
-	"github.com/opentracing/opentracing-go"
-	"github.com/opentracing/opentracing-go/ext"
 )
 
 type CustomerHandlers interface {
@@ -20,7 +17,6 @@ type CustomerHandlers interface {
 }
 
 type customerHandler struct {
-	tracer  opentracing.Tracer
 	redisDB redis.InMemoryStorageI
 }
 
@@ -34,14 +30,6 @@ func (ch *customerHandler) TestHandler2(w http.ResponseWriter, r *http.Request) 
 }
 
 func (ch *customerHandler) SendCodeHandler(w http.ResponseWriter, r *http.Request) {
-	sendCodeHandlerSpan := ch.tracer.StartSpan("SendCodeHandler")
-	defer sendCodeHandlerSpan.Finish()
-
-	// Set some tags on the clientSpan to annotate that it's the client span. The additional HTTP tags are useful for debugging purposes.
-	ext.SpanKindRPCClient.Set(sendCodeHandlerSpan)
-	ext.HTTPUrl.Set(sendCodeHandlerSpan, r.URL.Path)
-	ext.HTTPMethod.Set(sendCodeHandlerSpan, "GET")
-
 	// read body from request
 	var body models.ReqSendCode
 	if err := utils.BodyParser(r, body); err != nil {
@@ -75,13 +63,6 @@ func (ch *customerHandler) SendCodeHandler(w http.ResponseWriter, r *http.Reques
 }
 
 func (ch *customerHandler) VerfyCodeHandler(w http.ResponseWriter, r *http.Request) {
-	verfyCodeHandlerSpan := ch.tracer.StartSpan("VerfyCodeHandler")
-	defer verfyCodeHandlerSpan.Finish()
-
-	// Set some tags on the clientSpan to annotate that it's the client span. The additional HTTP tags are useful for debugging purposes.
-	ext.SpanKindRPCClient.Set(verfyCodeHandlerSpan)
-	ext.HTTPUrl.Set(verfyCodeHandlerSpan, r.URL.Path)
-	ext.HTTPMethod.Set(verfyCodeHandlerSpan, "GET")
 
 	// read body from request
 	var body models.ReqCheckCode

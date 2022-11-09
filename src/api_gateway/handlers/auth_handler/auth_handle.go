@@ -3,10 +3,7 @@ package auth_handler
 import (
 	"monorepo/src/libs/logger"
 	"net/http"
-
 	//"monorepo/src/api_gateway/ci"
-
-	"github.com/opentracing/opentracing-go"
 )
 
 type AuthHandlers interface {
@@ -14,7 +11,6 @@ type AuthHandlers interface {
 }
 
 type authHandler struct {
-	tracer opentracing.Tracer
 }
 
 // New creates auth handlers

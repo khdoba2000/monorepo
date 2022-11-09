@@ -12,8 +12,6 @@ go_library(
         "//src/libs/logger",
         "//src/libs/redis",
         "//src/libs/utils",
-        "@com_github_opentracing_opentracing_go//:opentracing-go",
-        "@com_github_opentracing_opentracing_go//ext",
     ],
 )
 
