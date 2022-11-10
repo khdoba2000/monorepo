@@ -197,6 +197,14 @@ def go_dependencies():
         version = "v3.2.0+incompatible",
     )
     go_repository(
+        name = "com_github_dlclark_regexp2",
+        build_file_proto_mode = "disable_global",
+        importpath = "github.com/dlclark/regexp2",
+        sum = "h1:7lJfhqlPssTb1WQx4yvTHN0uElPEv52sbaECrAQxjAo=",
+        version = "v1.7.0",
+    )
+
+    go_repository(
         name = "com_github_edsrzf_mmap_go",
         build_file_proto_mode = "disable_global",
         importpath = "github.com/edsrzf/mmap-go",
@@ -551,6 +559,14 @@ def go_dependencies():
         sum = "h1:5IcZpTvzydCQeHzK4Ef/D5rrSqwxob0t8PQPMybUNFM=",
         version = "v1.1.2",
     )
+    go_repository(
+        name = "com_github_hesahesa_pwdbro",
+        build_file_proto_mode = "disable_global",
+        importpath = "github.com/hesahesa/pwdbro",
+        sum = "h1:GFN5WmYeibHbYs9q8FjHrdS1+QFHTTPkJZCaK6EZV4E=",
+        version = "v0.0.0-20200103124734-0fb34fd61758",
+    )
+
     go_repository(
         name = "com_github_hudl_fargo",
         build_file_proto_mode = "disable_global",
@@ -991,6 +1007,14 @@ def go_dependencies():
         sum = "h1:jyEFiXpy21Wm81FBN71l9VoMMV8H8jG+qIK3GCpY6Qs=",
         version = "v1.4.1",
     )
+    go_repository(
+        name = "com_github_trustelem_zxcvbn",
+        build_file_proto_mode = "disable_global",
+        importpath = "github.com/trustelem/zxcvbn",
+        sum = "h1:mp4JFtzdDYGj9WYSD3KQSkwwUumWNFzXaAjckaTYpsc=",
+        version = "v1.0.1",
+    )
+
     go_repository(
         name = "com_github_uber_jaeger_client_go",
         build_file_proto_mode = "disable_global",

@@ -1,21 +1,3 @@
-load("@io_bazel_rules_go//go:def.bzl", "go_library")
-
-go_library(
-    name = "service",
-    srcs = ["staff_auth.go"],
-    importpath = "monorepo/src/auth_service/service",
-    visibility = ["//visibility:public"],
-    deps = [
-        "//src/auth_service/configs",
-        "//src/auth_service/storage",
-        "//src/idl/auth_service",
-        "//src/libs/logger",
-        "@org_golang_google_grpc//codes",
-        "@org_golang_google_grpc//status",
-        "@org_golang_x_crypto//bcrypt",
-    ],
-)
-
 alias(
     name = "go_default_library",
     actual = ":service",
