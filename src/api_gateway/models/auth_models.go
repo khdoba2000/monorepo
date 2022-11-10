@@ -20,3 +20,9 @@ func (lm *StuffLoginModel) Validate() error {
 		validation.Field(&lm.PhoneNumber, validation.Required, validation.Match(regexp.MustCompile("[+]{1}[1-9]{1}[0-9]{1,13}$"))),
 	)
 }
+
+type StaffLoginResponse struct {
+	ID           string `json:"id"`
+	AccessToken  string `json:"access_token"`
+	RefreshToken string `json:"refresh_token"`
+}

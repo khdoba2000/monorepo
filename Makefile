@@ -21,3 +21,5 @@ protogen: #https://medium.com/goc0de/a-cute-bazel-proto-hack-for-golang-ides-2a4
 
 test:
 	bazel test //... --test_output=errors  
+api:
+	bazel run //src/api_gateway
