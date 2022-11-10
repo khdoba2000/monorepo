@@ -480,6 +480,13 @@ def go_dependencies():
         sum = "h1:i40aqfkR1h2SlN9hojwV5ZA91wcXFOvkdNIeFDP5koI=",
         version = "v1.8.0",
     )
+    go_repository(
+        name = "com_github_grpc_ecosystem_grpc_opentracing",
+        build_file_proto_mode = "disable_global",
+        importpath = "github.com/grpc-ecosystem/grpc-opentracing",
+        sum = "h1:MJG/KsmcqMwFAkh8mTnAwhyKoB+sTAnY4CACC110tbU=",
+        version = "v0.0.0-20180507213350-8e809c8a8645",
+    )
 
     go_repository(
         name = "com_github_hashicorp_consul_api",
@@ -749,6 +756,13 @@ def go_dependencies():
         sum = "h1:lDH9UUVJtmYCjyT0CI4q8xvlXPxeZ0gYCVvWbmPlp88=",
         version = "v0.0.0-20160315200505-970db520ece7",
     )
+    go_repository(
+        name = "com_github_opentracing_contrib_go_grpc",
+        build_file_proto_mode = "disable_global",
+        importpath = "github.com/opentracing-contrib/go-grpc",
+        sum = "h1:4cPxUYdgaGzZIT5/j0IfqOrrXmq6bG8AwvwisMXpdrg=",
+        version = "v0.0.0-20210225150812-73cb765af46e",
+    )
 
     go_repository(
         name = "com_github_opentracing_contrib_go_stdlib",
@@ -938,8 +952,8 @@ def go_dependencies():
         name = "com_github_stretchr_objx",
         build_file_proto_mode = "disable_global",
         importpath = "github.com/stretchr/objx",
-        sum = "h1:M2gUjqZET1qApGOWNSnZ49BAIMX4F/1plDv3+l31EJ4=",
-        version = "v0.4.0",
+        sum = "h1:1zr/of2m5FGMsad5YfcqgdqdWrIhu+EBEJRhR1U7z/c=",
+        version = "v0.5.0",
     )
     go_repository(
         name = "com_github_stretchr_testify",
@@ -1506,6 +1520,7 @@ def go_dependencies():
         sum = "h1:q++2WTJbUgpQu4B6hCuT7VkdwaTP7Qz6Daak3WzbrlI=",
         version = "v3.5.5",
     )
+
     go_repository(
         name = "io_opencensus_go",
         build_file_proto_mode = "disable_global",

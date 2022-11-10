@@ -4,11 +4,13 @@ import (
 	"context"
 	"monorepo/src/api_gateway/configs"
 	"monorepo/src/api_gateway/handlers"
-	"monorepo/src/api_gateway/pkg/log"
 	"monorepo/src/api_gateway/pkg/tracing"
 	"monorepo/src/api_gateway/routers"
+	"monorepo/src/libs/log"
+	"monorepo/src/libs/tracer"
 	"net/http"
 
+	"github.com/opentracing/opentracing-go"
 	jexpvar "github.com/uber/jaeger-lib/metrics/expvar"
 
 	"go.uber.org/fx"
@@ -19,18 +21,19 @@ import (
 
 func NewMux(lc fx.Lifecycle, conf *configs.Configuration) *tracing.TracedServeMux {
 	metricsFactory := jexpvar.NewFactory(10) // 10 buckets for histograms
-	logger2, _ := zap.NewDevelopment(
+	logger, _ := zap.NewDevelopment(
 		zap.AddStacktrace(zapcore.FatalLevel),
 		zap.AddCallerSkip(1),
 	)
 
-	zapLogger := logger2.With(zap.String("service", "api_gateway"))
-	tracer := tracing.Init("api_gateway", metricsFactory, log.NewFactory(zapLogger))
-	tracerRoot := tracing.NewServeMux(tracer, conf)
+	zapLogger := logger.With(zap.String("service", "api_gateway"))
+	tracer := tracer.Init("api_gateway", metricsFactory, log.NewFactory(zapLogger))
+	opentracing.SetGlobalTracer(tracer)
+	handlerWithTracer := tracing.NewServeMux(tracer, conf)
 
 	server := &http.Server{
 		Addr:    conf.HTTPPort,
-		Handler: tracerRoot,
+		Handler: handlerWithTracer,
 	}
 	lc.Append(fx.Hook{
 
@@ -47,7 +50,7 @@ func NewMux(lc fx.Lifecycle, conf *configs.Configuration) *tracing.TracedServeMu
 		},
 	})
 
-	return tracerRoot
+	return handlerWithTracer
 }
 
 func main() {
@@ -55,8 +58,8 @@ func main() {
 	app := fx.New(
 		fx.Provide(
 			configs.Config,
-			handlers.New,
 			NewMux,
+			handlers.New,
 		),
 
 		fx.Invoke(

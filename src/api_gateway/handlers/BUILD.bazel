@@ -8,7 +8,7 @@ go_library(
     deps = [
         "//src/api_gateway/handlers/auth_handler",
         "//src/api_gateway/handlers/customer_handler",
-        "//src/api_gateway/pkg/log",
+        "//src/libs/log",
         "@org_uber_go_zap//:zap",
         "@org_uber_go_zap//zapcore",
     ],

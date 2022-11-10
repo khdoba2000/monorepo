@@ -3,7 +3,7 @@ package handlers
 import (
 	"monorepo/src/api_gateway/handlers/auth_handler"
 	"monorepo/src/api_gateway/handlers/customer_handler"
-	"monorepo/src/api_gateway/pkg/log"
+	"monorepo/src/libs/log"
 
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"

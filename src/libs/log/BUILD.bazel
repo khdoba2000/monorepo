@@ -7,7 +7,7 @@ go_library(
         "logger.go",
         "spanlogger.go",
     ],
-    importpath = "monorepo/src/api_gateway/pkg/log",
+    importpath = "monorepo/src/libs/log",
     visibility = ["//visibility:public"],
     deps = [
         "@com_github_opentracing_opentracing_go//:opentracing-go",

@@ -16,7 +16,6 @@
 package tracing
 
 import (
-	"fmt"
 	"monorepo/src/api_gateway/configs"
 	"monorepo/src/api_gateway/middleware"
 	"net/http"
@@ -36,8 +35,6 @@ func NewServeMux(tracer opentracing.Tracer, conf *configs.Configuration) *Traced
 	root.Use(middleware.Logging)
 	casbinJWTRoleAuthorizer, err := middleware.NewCasbinJWTRoleAuthorizer(conf)
 	if err != nil {
-		fmt.Println("CasbinConfigPath:", conf.CasbinConfigPath)
-		fmt.Println("MiddlewareRolesPath:", conf.MiddlewareRolesPath)
 		panic(err)
 	}
 	root.Use(casbinJWTRoleAuthorizer.Middleware)

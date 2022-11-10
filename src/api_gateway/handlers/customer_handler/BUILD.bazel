@@ -7,9 +7,9 @@ go_library(
     visibility = ["//visibility:public"],
     deps = [
         "//src/api_gateway/models",
-        "//src/api_gateway/pkg/log",
         "//src/api_gateway/utils",
         "//src/libs/etc",
+        "//src/libs/log",
         "//src/libs/redis",
         "//src/libs/utils",
     ],

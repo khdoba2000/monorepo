@@ -1,20 +1,22 @@
 load("@io_bazel_rules_go//go:def.bzl", "go_library")
 
 go_library(
-    name = "auth_handler",
-    srcs = ["auth_handle.go"],
-    importpath = "monorepo/src/api_gateway/handlers/auth_handler",
+    name = "tracer",
+    srcs = ["init.go"],
+    importpath = "monorepo/src/libs/tracer",
     visibility = ["//visibility:public"],
     deps = [
-        "//src/api_gateway/dependencies",
-        "//src/idl/auth_service",
         "//src/libs/log",
         "@com_github_opentracing_opentracing_go//:opentracing-go",
+        "@com_github_uber_jaeger_client_go//config",
+        "@com_github_uber_jaeger_client_go//rpcmetrics",
+        "@com_github_uber_jaeger_lib//metrics",
+        "@org_uber_go_zap//:zap",
     ],
 )
 
 alias(
     name = "go_default_library",
-    actual = ":auth_handler",
+    actual = ":tracer",
     visibility = ["//visibility:public"],
 )
