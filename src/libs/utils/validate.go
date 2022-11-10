@@ -1,13 +1,12 @@
 package utils
 
 import (
-	"fmt"
+	"monorepo/src/api_gateway/constants"
 	"net"
 	"regexp"
+	"unicode"
 
 	"strings"
-
-	"github.com/hesahesa/pwdbro"
 )
 
 var emailRegex = regexp.MustCompile("^[a-zA-Z0-9.!#$%&'*+\\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$")
@@ -52,19 +51,34 @@ func ValidatePhoneOrEmail(loginValue string) bool {
 	return false
 }
 
-// IsStrongPassword checks if the password is strong enough
-func IsStrongPassword(password string) bool {
-	pwdbro := pwdbro.NewDefaultPwdBro()
-	status, err := pwdbro.RunParallelChecks(password)
-	if err != nil {
-		fmt.Println(err)
+// ValidatePassword check if the password meets requiremnts of
+// at least 8 characters, at least one alphabetic, and at least one number
+func ValidatePassword(p string) error {
+	if len(p) < 8 {
+		return constants.ErrPasswordTooShort
 	}
+	if len(p) > 256 {
+		return constants.ErrPasswordTooLong
+	}
+	hasAnyDigit := false
+	hasAnyAlphabetic := false
+	for _, c := range p {
+		if unicode.IsDigit(c) {
+			hasAnyDigit = true
+		}
 
-	for _, resp := range status {
-		if !resp.Safe {
-			return false
+		if unicode.IsLetter(c) {
+			hasAnyAlphabetic = true
 		}
 	}
 
-	return true
+	if !hasAnyDigit {
+		return constants.ErrMustContainDigit
+	}
+
+	if !hasAnyAlphabetic {
+		return constants.ErrMustContainAlphabetic
+	}
+
+	return nil
 }

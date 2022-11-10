@@ -54,9 +54,9 @@ func (ah *authHandler) ResetPassword(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// check if the password is strong
-	if strong := libsUtils.IsStrongPassword(body.NewPassword); !strong {
-		utils.HandleBadRequestResponse(w, "password is not strong enough")
+	// check if the password meets requirements
+	if err := libsUtils.ValidatePassword(body.NewPassword); err != nil {
+		utils.HandleBadRequestResponse(w, err.Error())
 		return
 	}
 

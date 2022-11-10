@@ -10,7 +10,7 @@ go_library(
     ],
     importpath = "monorepo/src/libs/utils",
     visibility = ["//visibility:public"],
-    deps = ["@com_github_hesahesa_pwdbro//:go_default_library"],
+    deps = ["//src/api_gateway/constants"],
 )
 
 alias(
