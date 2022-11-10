@@ -1,69 +1,80 @@
 package main
 
 import (
+	"context"
+	"fmt"
+	"monorepo/src/libs/log"
+	"monorepo/src/libs/tracer"
 	"net"
+	"time"
 
-	"monorepo/src/auth_service/configs"
-	"monorepo/src/auth_service/pkg/db"
-	"monorepo/src/auth_service/service"
-	"monorepo/src/auth_service/storage"
+	otgrpc "github.com/opentracing-contrib/go-grpc"
+	"github.com/opentracing/opentracing-go"
+	"github.com/opentracing/opentracing-go/ext"
+
+	jexpvar "github.com/uber/jaeger-lib/metrics/expvar"
+
 	pb "monorepo/src/idl/auth_service"
-	"monorepo/src/libs/logger"
 
-	"google.golang.org/grpc/reflection"
-
+	"go.uber.org/zap"
+	"go.uber.org/zap/zapcore"
 	"google.golang.org/grpc"
 )
 
+type authServer struct {
+	pb.UnimplementedAuthServiceServer
+	logger log.Factory
+	tracer opentracing.Tracer
+}
+
+func (s authServer) CustomerSignUp(ctx context.Context, r *pb.CustomerSignUpRequest) (*pb.AuthResponse, error) {
+
+	s.logger.For(ctx).Info("CustomerSignUp req", zap.String("name", r.Name))
+
+	if span := opentracing.SpanFromContext(ctx); span != nil {
+		span := s.tracer.StartSpan("Query database", opentracing.ChildOf(span.Context()))
+		span.SetTag("param.name", r.Name)
+		ext.SpanKindRPCClient.Set(span)
+		defer span.Finish()
+		ctx = opentracing.ContextWithSpan(ctx, span)
+	}
+	//simulate signup reg
+	time.Sleep(1 * time.Second)
+
+	return &pb.AuthResponse{AccessToken: "access", RefreshToken: "refresh"}, nil
+}
+
 func main() {
 
-	//Load configurations
-	config := configs.Config()
-
-	//Create logger instance
-	log := logger.New()
-
-	//Cleanup logger when returning main func
-	defer func(l logger.Logger) {
-		err := logger.Cleanup(l)
-		if err != nil {
-			log.Fatal("failed cleanup logger", logger.Error(err))
-		}
-	}(log)
-
-	//Initialize database, make a connection with postgres
-	connDB, err := db.Init(*config)
+	listener, err := net.Listen("tcp", ":8084")
 
 	if err != nil {
-		log.Fatal("failed to connect with db: ", logger.Error(err))
+		fmt.Println("grpc failed to listen: ")
+		panic(err)
 	}
 
-	log.Info("authService: sqlxConfig",
-		logger.String("host", config.PostgresHost),
-		logger.Int("port", config.PostgresPort),
-		logger.String("database", config.PostgresDatabase),
+	metricsFactory := jexpvar.NewFactory(10) // 10 buckets for histograms
+	loggerForTracer, _ := zap.NewDevelopment(
+		zap.AddStacktrace(zapcore.FatalLevel),
+		zap.AddCallerSkip(1),
 	)
 
-	// Create storage instance
-	storage := storage.New(connDB)
+	zapLogger := loggerForTracer.With(zap.String("service", "auth_service"))
+	tracer := tracer.Init("auth_service", metricsFactory, log.NewFactory(zapLogger))
 
-	// Make an authentication service instance
-	authService := service.New(storage, *config, log)
+	grpcServer := grpc.NewServer(grpc.UnaryInterceptor(
+		otgrpc.OpenTracingServerInterceptor(tracer)),
+		grpc.StreamInterceptor(
+			otgrpc.OpenTracingStreamServerInterceptor(tracer)))
 
-	// Create grpc server, registering and listening
-	grpcServer := grpc.NewServer()
-	pb.RegisterAuthServiceServer(grpcServer, authService)
-	reflection.Register(grpcServer)
+	logger := log.NewFactory(zapLogger)
 
-	lis, err := net.Listen("tcp", config.RPCPort)
-	if err != nil {
-		log.Fatal("error while listening tcp", logger.Error(err))
+	pb.RegisterAuthServiceServer(grpcServer, &authServer{
+		logger: logger,
+		tracer: tracer,
+	})
+
+	if err := grpcServer.Serve(listener); err != nil {
+		fmt.Println("Serve")
 	}
-
-	if err := grpcServer.Serve(lis); err != nil {
-		log.Fatal("failed to serve: ", logger.Error(err))
-	}
-
-	log.Info("crm server running on port : ", logger.String("port", config.RPCPort))
-
 }
