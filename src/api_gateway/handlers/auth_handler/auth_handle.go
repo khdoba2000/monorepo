@@ -1,10 +1,16 @@
 package auth_handler
 
 import (
+	"context"
+	"monorepo/src/api_gateway/configs"
 	"monorepo/src/api_gateway/dependencies"
+	"monorepo/src/api_gateway/models"
+	u "monorepo/src/api_gateway/utils"
 	"monorepo/src/idl/auth_service"
 	"monorepo/src/libs/log"
 	"net/http"
+	"strings"
+	"time"
 
 	"github.com/opentracing/opentracing-go"
 	//"monorepo/src/api_gateway/ci"
@@ -12,6 +18,7 @@ import (
 
 type AuthHandlers interface {
 	TestHandler(w http.ResponseWriter, r *http.Request)
+	StuffLogin(w http.ResponseWriter, r *http.Request)
 }
 
 type authHandler struct {
@@ -39,6 +46,42 @@ func (ah *authHandler) TestHandler(w http.ResponseWriter, r *http.Request) {
 	w.Write([]byte("Hello, World1!"))
 }
 
-func (ah *authHandler) SendSMS(w http.ResponseWriter, r *http.Request) {
-	// container := ci.Get()
+func (ah *authHandler) StuffLogin(w http.ResponseWriter, r *http.Request) {
+	var (
+		body models.StuffLoginModel
+	)
+
+	err := u.BodyParser(r, &body)
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		u.WriteJSON(w, err.Error())
+		return
+	}
+
+	if !strings.Contains(body.PhoneNumber, "+") || len(body.PhoneNumber) != 13 {
+		w.WriteHeader(http.StatusBadRequest)
+		u.WriteJSON(w, "error: phone number is not correctly filled")
+		return
+	}
+
+	err = body.Validate()
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		u.WriteJSON(w, "error: one of the fields is not correct")
+		return
+	}
+
+	ctx, cancel := context.WithTimeout(context.Background(),
+		time.Second*time.Duration(configs.Config().CtxTimeout))
+	defer cancel()
+
+	_, err = dependencies.AuthServiceClient().StaffLogin(ctx, &auth_service.StaffLoginRequest{
+		PhoneNumber: body.PhoneNumber,
+		Password:    body.Password,
+	})
+	if err != nil {
+		u.HandleGrpcErrWithMessage(w, err, "Error in Login")
+		return
+	}
+
 }
