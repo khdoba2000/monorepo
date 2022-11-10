@@ -8,7 +8,7 @@ go_library(
     ],
     importpath = "monorepo/src/api_gateway/models",
     visibility = ["//visibility:public"],
-    deps = ["@com_github_go_ozzo_ozzo_validation_v3//:go_default_library"],
+    deps = ["@com_github_go_ozzo_ozzo_validation_v3//:ozzo-validation"],
 )
 
 alias(

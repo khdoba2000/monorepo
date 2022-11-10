@@ -3,6 +3,9 @@ load("@io_bazel_rules_go//go:def.bzl", "go_binary", "go_library")
 go_library(
     name = "auth_service_lib",
     srcs = ["main.go"],
+    data = [
+        ".env",
+    ],
     importpath = "monorepo/src/auth_service",
     visibility = ["//visibility:private"],
     deps = [
