@@ -6,9 +6,11 @@ require (
 	github.com/casbin/casbin/v2 v2.57.0
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/gin-gonic/gin v1.8.1
+	github.com/go-ozzo/ozzo-validation/v3 v3.8.1
 	github.com/gomodule/redigo v1.8.9
 	github.com/google/uuid v1.3.0
 	github.com/gorilla/mux v1.8.0
+	github.com/jmoiron/sqlx v1.3.5
 	github.com/joho/godotenv v1.4.0
 	github.com/opentracing-contrib/go-grpc v0.0.0-20210225150812-73cb765af46e
 	github.com/opentracing-contrib/go-stdlib v1.0.0

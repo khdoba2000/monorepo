@@ -6,6 +6,7 @@ go_library(
     importpath = "monorepo/src/api_gateway/handlers/auth_handler",
     visibility = ["//visibility:public"],
     deps = [
+        "//src/api_gateway/configs",
         "//src/api_gateway/dependencies",
         "//src/api_gateway/models",
         "//src/api_gateway/utils",

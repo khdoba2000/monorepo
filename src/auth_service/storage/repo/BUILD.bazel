@@ -1,3 +1,16 @@
+<<<<<<< HEAD
+=======
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "repo",
+    srcs = ["staff_auth.go"],
+    importpath = "monorepo/src/auth_service/storage/repo",
+    visibility = ["//visibility:public"],
+    deps = ["//src/idl/auth_service"],
+)
+
+>>>>>>> 559f92df97dc2e80ad7c4a0831ff0fd07f82987a
 alias(
     name = "go_default_library",
     actual = ":repo",

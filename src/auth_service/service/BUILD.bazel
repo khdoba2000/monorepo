@@ -1,3 +1,25 @@
+<<<<<<< HEAD
+=======
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "service",
+    srcs = ["staff_auth.go"],
+    importpath = "monorepo/src/auth_service/service",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//src/auth_service/storage",
+        "//src/idl/auth_service",
+        "//src/libs/log",
+        "@com_github_opentracing_opentracing_go//:opentracing-go",
+        "@org_golang_google_grpc//codes",
+        "@org_golang_google_grpc//status",
+        "@org_golang_x_crypto//bcrypt",
+        "@org_uber_go_zap//:zap",
+    ],
+)
+
+>>>>>>> 559f92df97dc2e80ad7c4a0831ff0fd07f82987a
 alias(
     name = "go_default_library",
     actual = ":service",

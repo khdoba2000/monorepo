@@ -4,10 +4,12 @@ go_library(
     name = "models",
     srcs = [
         "auth.go",
+        "auth_models.go",
         "otp_structure.go",
     ],
     importpath = "monorepo/src/api_gateway/models",
     visibility = ["//visibility:public"],
+    deps = ["@com_github_go_ozzo_ozzo_validation_v3//:ozzo-validation"],
 )
 
 alias(
