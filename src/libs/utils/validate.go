@@ -28,7 +28,7 @@ func IsEmailValid(e string) bool {
 	return true
 }
 
-var phoneRegex = regexp.MustCompile(`(0|\\+62|062|62)[0-9]+$`)
+var phoneRegex = regexp.MustCompile(`[+]{1}[1-9]{1}[0-9]{1,13}$`)
 
 // IsPhoneValid
 func IsPhoneValid(p string) bool {
