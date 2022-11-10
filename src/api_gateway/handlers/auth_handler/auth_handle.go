@@ -2,8 +2,11 @@ package auth_handler
 
 import (
 	"monorepo/src/api_gateway/dependencies"
+	"monorepo/src/api_gateway/models"
+	"monorepo/src/api_gateway/utils"
 	"monorepo/src/idl/auth_service"
 	"monorepo/src/libs/log"
+	libsUtils "monorepo/src/libs/utils"
 	"net/http"
 
 	"github.com/opentracing/opentracing-go"
@@ -41,4 +44,23 @@ func (ah *authHandler) TestHandler(w http.ResponseWriter, r *http.Request) {
 
 func (ah *authHandler) SendSMS(w http.ResponseWriter, r *http.Request) {
 	// container := ci.Get()
+}
+
+func (ah *authHandler) ResetPassword(w http.ResponseWriter, r *http.Request) {
+	// read body from request
+	var body models.ReqResetPassword
+	if err := utils.BodyParser(r, body); err != nil {
+		utils.HandleBadRequestErrWithMessage(w, err, "invalid body")
+		return
+	}
+
+	// check if the password is strong
+	if strong := libsUtils.IsStrongPassword(body.NewPassword); !strong {
+		utils.HandleBadRequestResponse(w, "password is not strong enough")
+		return
+	}
+
+	// here we should update password from databse
+
+	w.WriteHeader(http.StatusOK)
 }

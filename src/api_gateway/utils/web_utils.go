@@ -21,7 +21,7 @@ func HandleGrpcErrWithMessage(w http.ResponseWriter, err error, args ...interfac
 	if !ok || st.Code() == codes.Internal {
 		// logger.Error(err)
 		w.WriteHeader(http.StatusInternalServerError)
-		WriteJSON(w, response{Error: true,
+		WriteJSON(w, Response{Error: true,
 			Data: Error{
 				Status:  http.StatusInternalServerError,
 				Message: st.Message(),
@@ -31,7 +31,7 @@ func HandleGrpcErrWithMessage(w http.ResponseWriter, err error, args ...interfac
 	} else if st.Code() == codes.NotFound {
 		// logger.Error(err)
 		w.WriteHeader(http.StatusNotFound)
-		WriteJSON(w, response{Error: true,
+		WriteJSON(w, Response{Error: true,
 			Data: Error{
 				Status:  http.StatusNotFound,
 				Message: st.Message(),
@@ -41,7 +41,7 @@ func HandleGrpcErrWithMessage(w http.ResponseWriter, err error, args ...interfac
 	} else if st.Code() == codes.Unavailable {
 		// logger.Error(err)
 		w.WriteHeader(http.StatusBadGateway)
-		WriteJSON(w, response{Error: true,
+		WriteJSON(w, Response{Error: true,
 			Data: Error{
 				Status:  http.StatusBadGateway,
 				Message: st.Message(),
@@ -51,7 +51,7 @@ func HandleGrpcErrWithMessage(w http.ResponseWriter, err error, args ...interfac
 	} else if st.Code() == codes.AlreadyExists {
 		// logger.Error(err)
 		w.WriteHeader(http.StatusBadRequest)
-		WriteJSON(w, response{Error: true,
+		WriteJSON(w, Response{Error: true,
 			Data: Error{
 				Status:  http.StatusBadRequest,
 				Message: st.Message(),
@@ -61,7 +61,7 @@ func HandleGrpcErrWithMessage(w http.ResponseWriter, err error, args ...interfac
 	} else if st.Code() == codes.InvalidArgument {
 		// logger.Error(err)
 		w.WriteHeader(http.StatusBadRequest)
-		WriteJSON(w, response{Error: true,
+		WriteJSON(w, Response{Error: true,
 			Data: Error{
 				Status:  http.StatusBadRequest,
 				Message: st.Message(),
@@ -71,7 +71,7 @@ func HandleGrpcErrWithMessage(w http.ResponseWriter, err error, args ...interfac
 	} else if st.Code() == codes.DataLoss {
 		// logger.Error(err)
 		w.WriteHeader(http.StatusBadRequest)
-		WriteJSON(w, response{Error: true,
+		WriteJSON(w, Response{Error: true,
 			Data: Error{
 				Status:  http.StatusBadRequest,
 				Message: st.Message(),
@@ -81,7 +81,7 @@ func HandleGrpcErrWithMessage(w http.ResponseWriter, err error, args ...interfac
 	} else if st.Code() == codes.PermissionDenied {
 		// logger.Error(err)
 		w.WriteHeader(http.StatusForbidden)
-		WriteJSON(w, response{Error: true,
+		WriteJSON(w, Response{Error: true,
 			Data: Error{
 				Status:  http.StatusForbidden,
 				Message: st.Message(),
@@ -91,7 +91,7 @@ func HandleGrpcErrWithMessage(w http.ResponseWriter, err error, args ...interfac
 	} else if strings.Contains("User blocked in user service", st.Message()) {
 		// logger.Error(err)
 		w.WriteHeader(http.StatusForbidden)
-		WriteJSON(w, response{Error: true,
+		WriteJSON(w, Response{Error: true,
 			Data: Error{
 				Status:  http.StatusForbidden,
 				Message: st.Message(),
@@ -100,7 +100,7 @@ func HandleGrpcErrWithMessage(w http.ResponseWriter, err error, args ...interfac
 	}
 	// logger.Error(err)
 	w.WriteHeader(http.StatusInternalServerError)
-	WriteJSON(w, response{Error: true,
+	WriteJSON(w, Response{Error: true,
 		Data: Error{
 			Status:  http.StatusInternalServerError,
 			Message: st.Message(),
@@ -109,7 +109,7 @@ func HandleGrpcErrWithMessage(w http.ResponseWriter, err error, args ...interfac
 	return err
 }
 
-type response struct {
+type Response struct {
 	Error bool        `json:"error"`
 	Data  interface{} `json:"data"`
 }
@@ -127,7 +127,7 @@ func HandleInternalWithMessage(w http.ResponseWriter, err error, message string)
 
 	log.Panicln(message+" ", err)
 	w.WriteHeader(http.StatusInternalServerError)
-	WriteJSON(w, response{Error: true,
+	WriteJSON(w, Response{Error: true,
 		Data: Error{
 			Status:  http.StatusInternalServerError,
 			Message: message,
@@ -142,7 +142,7 @@ func HandleBadRequestErrWithMessage(w http.ResponseWriter, err error, message st
 
 	log.Println(message+" ", err)
 	w.WriteHeader(http.StatusBadRequest)
-	WriteJSON(w, response{Error: true,
+	WriteJSON(w, Response{Error: true,
 		Data: Error{
 			Status:  http.StatusBadRequest,
 			Message: message + err.Error(),
@@ -153,7 +153,7 @@ func HandleBadRequestErrWithMessage(w http.ResponseWriter, err error, message st
 func HandleBadRequestResponse(w http.ResponseWriter, message string) {
 	log.Println(message)
 	w.WriteHeader(http.StatusBadRequest)
-	WriteJSON(w, response{Error: true,
+	WriteJSON(w, Response{Error: true,
 		Data: Error{
 			Status:  http.StatusBadRequest,
 			Message: message,

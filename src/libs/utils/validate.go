@@ -1,10 +1,13 @@
 package utils
 
 import (
+	"fmt"
 	"net"
 	"regexp"
 
 	"strings"
+
+	"github.com/hesahesa/pwdbro"
 )
 
 var emailRegex = regexp.MustCompile("^[a-zA-Z0-9.!#$%&'*+\\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$")
@@ -47,4 +50,21 @@ func ValidatePhoneOrEmail(loginValue string) bool {
 	}
 
 	return false
+}
+
+// IsStrongPassword checks if the password is strong enough
+func IsStrongPassword(password string) bool {
+	pwdbro := pwdbro.NewDefaultPwdBro()
+	status, err := pwdbro.RunParallelChecks(password)
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	for _, resp := range status {
+		if !resp.Safe {
+			return false
+		}
+	}
+
+	return true
 }
