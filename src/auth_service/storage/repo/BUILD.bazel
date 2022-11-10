@@ -2,7 +2,7 @@ load("@io_bazel_rules_go//go:def.bzl", "go_library")
 
 go_library(
     name = "repo",
-    srcs = ["auth.go"],
+    srcs = ["staff_auth.go"],
     importpath = "monorepo/src/auth_service/storage/repo",
     visibility = ["//visibility:public"],
     deps = ["//src/idl/auth_service"],
