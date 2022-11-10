@@ -21,9 +21,9 @@ type Tokens struct {
 }
 
 // GenerateNewTokens func for generate a new Access & Refresh tokens.
-func GenerateNewTokens(id string, credentials map[string]string) (*Tokens, error) {
+func GenerateNewTokens(id string, credentials map[string]string, branchID string) (*Tokens, error) {
 	// Generate JWT Access token.
-	accessToken, err := generateNewAccessToken(id, credentials)
+	accessToken, err := generateNewAccessToken(id, credentials, branchID)
 	if err != nil {
 		// Return token generation error.
 		return nil, err
@@ -42,13 +42,14 @@ func GenerateNewTokens(id string, credentials map[string]string) (*Tokens, error
 	}, nil
 }
 
-func generateNewAccessToken(id string, credentials map[string]string) (string, error) {
+func generateNewAccessToken(id string, credentials map[string]string, branchID string) (string, error) {
 
 	// Create a new claims.
 	claims := jwt.MapClaims{}
 
 	// Set public claims:
 	claims["id"] = id
+	claims["branch_id"] = branchID
 	claims["expires"] = time.Now().Add(time.Minute * time.Duration(conf.JWTRefreshKeyExpireHours)).Unix()
 	claims["role"] = credentials["role"]
 	//	// Set private token credentials:
