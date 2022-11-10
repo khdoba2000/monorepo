@@ -2,11 +2,11 @@ package customer_handler
 
 import (
 	"monorepo/src/api_gateway/models"
-	"monorepo/src/api_gateway/pkg/log"
 	"monorepo/src/api_gateway/utils"
 	"monorepo/src/libs/etc"
+	"monorepo/src/libs/log"
 	"monorepo/src/libs/redis"
-	libs "monorepo/src/libs/utils"
+	libsUtils "monorepo/src/libs/utils"
 	"net/http"
 )
 
@@ -41,7 +41,7 @@ func (ch *customerHandler) SendCodeHandler(w http.ResponseWriter, r *http.Reques
 	}
 
 	// validate login value
-	if valid := libs.ValidatePhoneOrEmail(body.LoginValue); !valid {
+	if valid := libsUtils.ValidatePhoneOrEmail(body.LoginValue); !valid {
 		utils.HandleBadRequestResponse(w, "invalid login value")
 		return
 	}
@@ -50,7 +50,7 @@ func (ch *customerHandler) SendCodeHandler(w http.ResponseWriter, r *http.Reques
 	code := etc.GenerateCode(4, true)
 
 	// send one-time-password
-	if err := libs.SendCode(body.LoginValue, code); err != nil {
+	if err := libsUtils.SendCode(body.LoginValue, code); err != nil {
 		utils.HandleBadRequestErrWithMessage(w, err, "invalid phone number")
 		return
 	}
@@ -75,7 +75,7 @@ func (ch *customerHandler) VerfyCodeHandler(w http.ResponseWriter, r *http.Reque
 	}
 
 	// validate login values
-	if valid := libs.ValidatePhoneOrEmail(body.LoginValue); !valid {
+	if valid := libsUtils.ValidatePhoneOrEmail(body.LoginValue); !valid {
 		utils.HandleBadRequestResponse(w, "invalid login value")
 		return
 	}

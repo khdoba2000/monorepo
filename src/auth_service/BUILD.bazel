@@ -7,7 +7,15 @@ go_library(
     visibility = ["//visibility:private"],
     deps = [
         "//src/idl/auth_service",
+        "//src/libs/log",
+        "//src/libs/tracer",
+        "@com_github_opentracing_contrib_go_grpc//:go-grpc",
+        "@com_github_opentracing_opentracing_go//:opentracing-go",
+        "@com_github_opentracing_opentracing_go//ext",
+        "@com_github_uber_jaeger_lib//metrics/expvar",
         "@org_golang_google_grpc//:go_default_library",
+        "@org_uber_go_zap//:zap",
+        "@org_uber_go_zap//zapcore",
     ],
 )
 

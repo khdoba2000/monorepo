@@ -13,11 +13,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package tracing
+package tracer
 
 import (
 	"fmt"
-	"monorepo/src/api_gateway/pkg/log"
+	"monorepo/src/libs/log"
 	"time"
 
 	"github.com/opentracing/opentracing-go"

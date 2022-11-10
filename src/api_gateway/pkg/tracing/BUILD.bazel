@@ -2,24 +2,15 @@ load("@io_bazel_rules_go//go:def.bzl", "go_library")
 
 go_library(
     name = "tracing",
-    srcs = [
-        "http.go",
-        "init.go",
-        "mux.go",
-    ],
+    srcs = ["mux.go"],
     importpath = "monorepo/src/api_gateway/pkg/tracing",
     visibility = ["//visibility:public"],
     deps = [
         "//src/api_gateway/configs",
         "//src/api_gateway/middleware",
-        "//src/api_gateway/pkg/log",
         "@com_github_gorilla_mux//:mux",
         "@com_github_opentracing_contrib_go_stdlib//nethttp",
         "@com_github_opentracing_opentracing_go//:opentracing-go",
-        "@com_github_uber_jaeger_client_go//config",
-        "@com_github_uber_jaeger_client_go//rpcmetrics",
-        "@com_github_uber_jaeger_lib//metrics",
-        "@org_uber_go_zap//:zap",
     ],
 )
 

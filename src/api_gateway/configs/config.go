@@ -14,7 +14,7 @@ var (
 	once sync.Once
 )
 
-// Config ...
+// Config loads configuration using atomic pattern
 func Config() *Configuration {
 	once.Do(func() {
 		conf = load()
@@ -35,8 +35,10 @@ type Configuration struct {
 	RefreshTokenDuration       time.Duration
 	RefreshPasswdTokenDuration time.Duration
 
-	RedisHost string
-	RedisPort int
+	RedisHost       string
+	RedisPort       int
+	AuthServiceHost string
+	AuthServicePort int
 
 	CasbinConfigPath    string
 	MiddlewareRolesPath string
@@ -77,6 +79,8 @@ func load() *Configuration {
 	config.JWTRefreshKeyExpireHours = v.GetInt("JWT_REFRESH_KEY_EXPIRE_HOURS_COUNT")
 	config.RedisHost = v.GetString("REDIS_HOST")
 	config.RedisPort = v.GetInt("REDIS_PORT")
+	config.AuthServiceHost = v.GetString("AUTH_SERVICE_HOST")
+	config.AuthServicePort = v.GetInt("AUTH_SERVICE_PORT")
 	config.CtxTimeout = v.GetInt("CONTEXT_TIMEOUT")
 	return &config
 }

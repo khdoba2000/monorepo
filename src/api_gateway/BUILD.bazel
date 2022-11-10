@@ -11,9 +11,11 @@ go_library(
     deps = [
         "//src/api_gateway/configs",
         "//src/api_gateway/handlers",
-        "//src/api_gateway/pkg/log",
         "//src/api_gateway/pkg/tracing",
         "//src/api_gateway/routers",
+        "//src/libs/log",
+        "//src/libs/tracer",
+        "@com_github_opentracing_opentracing_go//:opentracing-go",
         "@com_github_uber_jaeger_lib//metrics/expvar",
         "@org_uber_go_fx//:fx",
         "@org_uber_go_fx//fxevent",
