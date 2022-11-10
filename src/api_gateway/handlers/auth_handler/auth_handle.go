@@ -108,7 +108,7 @@ func (ah *authHandler) ResetPassword(w http.ResponseWriter, r *http.Request) {
 		u.HandleInternalWithMessage(w, err, "error occured whiling hashing new password")
 	}
 
-	// this is just avoid unused variable error. Later we will send it to service where this hashed password will be saved to database
+	// this is just to avoid unused variable error. Later we will send it to service where this hashed password will be saved to database
 	fmt.Println(hashedPassword)
 	// here we should update password from databse
 

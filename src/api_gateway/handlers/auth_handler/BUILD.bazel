@@ -11,6 +11,7 @@ go_library(
         "//src/api_gateway/models",
         "//src/api_gateway/utils",
         "//src/idl/auth_service",
+        "//src/libs/etc",
         "//src/libs/log",
         "//src/libs/utils",
         "@com_github_opentracing_opentracing_go//:opentracing-go",
