@@ -6,8 +6,14 @@ go_library(
     importpath = "monorepo/src/auth_service",
     visibility = ["//visibility:private"],
     deps = [
+        "//src/auth_service/configs",
+        "//src/auth_service/pkg/db",
+        "//src/auth_service/service",
+        "//src/auth_service/storage",
         "//src/idl/auth_service",
+        "//src/libs/logger",
         "@org_golang_google_grpc//:go_default_library",
+        "@org_golang_google_grpc//reflection",
     ],
 )
 

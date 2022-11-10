@@ -75,6 +75,7 @@ type Configuration struct {
 	RefreshTokenDuration       time.Duration
 	RefreshPasswdTokenDuration time.Duration
 
+	RPCPort   string
 	RedisHost string
 	RedisPort int
 
@@ -132,6 +133,7 @@ func load() *Configuration {
 	v.SetDefault("POSTGRES_USER", "muhammad")
 	v.SetDefault("POSTGRES_PASSWORD", "12345")
 	v.SetDefault("POSTGRES_DB", "mono_db")
+	v.SetDefault("RPC_PORT", ":8084")
 	v.SetDefault("REDIS_HOST", "localhost")
 	v.SetDefault("REDIS_PORT", 6379)
 	v.SetDefault("CONTEXT_TIMEOUT", 7)
@@ -153,6 +155,7 @@ func load() *Configuration {
 	config.PostgresPassword = v.GetString("POSTGRES_PASSWORD")
 	config.PostgresHost = v.GetString("POSTGRES_HOST")
 	config.PostgresPort = v.GetInt("POSTGRES_PORT")
+	config.RPCPort = v.GetString("RPC_PORT")
 	config.RedisHost = v.GetString("REDIS_HOST")
 	config.RedisPort = v.GetInt("REDIS_PORT")
 	config.SendgridEmail = v.GetString("SENDGRID_EMAIL")

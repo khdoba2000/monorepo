@@ -327,11 +327,11 @@ def go_dependencies():
         version = "v10.10.0",
     )
     go_repository(
-        name = "com_github_go_zookeeper_zk",
+        name = "com_github_go_sql_driver_mysql",
         build_file_proto_mode = "disable_global",
-        importpath = "github.com/go-zookeeper/zk",
-        sum = "h1:4mx0EYENAdX/B/rbunjlt5+4RTA/a9SMHBRuSKdGxPM=",
-        version = "v1.0.2",
+        importpath = "github.com/go-sql-driver/mysql",
+        sum = "h1:BCTh4TKNUYmOmMUcQ3IipzF5prigylS7XXjEkfCHuOE=",
+        version = "v1.6.0",
     )
 
     go_repository(
@@ -560,27 +560,11 @@ def go_dependencies():
         version = "v0.0.0-20200824232613-28f6c0f3b639",
     )
     go_repository(
-        name = "com_github_influxdata_influxdb1_client",
+        name = "com_github_jmoiron_sqlx",
         build_file_proto_mode = "disable_global",
-        importpath = "github.com/influxdata/influxdb1-client",
-        sum = "h1:HqW4xhhynfjrtEiiSGcQUd6vrK23iMam1FO8rI7mwig=",
-        version = "v0.0.0-20200827194710-b269163b24ab",
-    )
-
-    go_repository(
-        name = "com_github_jmespath_go_jmespath",
-        build_file_proto_mode = "disable_global",
-        importpath = "github.com/jmespath/go-jmespath",
-        sum = "h1:BEgLn5cpjn8UN1mAw4NjwDrS35OdebyEtFe+9YPoQUg=",
-        version = "v0.4.0",
-    )
-
-    go_repository(
-        name = "com_github_joho_godotenv",
-        build_file_proto_mode = "disable_global",
-        importpath = "github.com/joho/godotenv",
-        sum = "h1:3l4+N6zfMWnkbPEXKng2o2/MR5mSwTrBih4ZEkkz1lg=",
-        version = "v1.4.0",
+        importpath = "github.com/jmoiron/sqlx",
+        sum = "h1:vFFPA71p1o5gAeqtEAwLU4dnX2napprKtHr7PYIcN3g=",
+        version = "v1.3.5",
     )
 
     go_repository(
@@ -657,6 +641,14 @@ def go_dependencies():
         version = "v1.2.1",
     )
     go_repository(
+        name = "com_github_lib_pq",
+        build_file_proto_mode = "disable_global",
+        importpath = "github.com/lib/pq",
+        sum = "h1:LXpIM/LZ5xGFhOpXAQUIMM1HdyqzVYM13zNdjCEEcA0=",
+        version = "v1.2.0",
+    )
+
+    go_repository(
         name = "com_github_magiconair_properties",
         build_file_proto_mode = "disable_global",
         importpath = "github.com/magiconair/properties",
@@ -679,25 +671,11 @@ def go_dependencies():
         version = "v0.0.14",
     )
     go_repository(
-        name = "com_github_matttproud_golang_protobuf_extensions",
+        name = "com_github_mattn_go_sqlite3",
         build_file_proto_mode = "disable_global",
-        importpath = "github.com/matttproud/golang_protobuf_extensions",
-        sum = "h1:4hp9jkHxhMHkqkrB3Ix0jegS5sx/RkqARlsWZ6pIwiU=",
-        version = "v1.0.1",
-    )
-    go_repository(
-        name = "com_github_miekg_dns",
-        build_file_proto_mode = "disable_global",
-        importpath = "github.com/miekg/dns",
-        sum = "h1:JKfpVSCB84vrAmHzyrsxB5NAr5kLoMXZArPSw7Qlgyg=",
-        version = "v1.1.43",
-    )
-    go_repository(
-        name = "com_github_minio_highwayhash",
-        build_file_proto_mode = "disable_global",
-        importpath = "github.com/minio/highwayhash",
-        sum = "h1:Aak5U0nElisjDCfPSG79Tgzkn2gl66NxOMspRrKnA/g=",
-        version = "v1.0.2",
+        importpath = "github.com/mattn/go-sqlite3",
+        sum = "h1:dNPt6NO46WmLVt2DLNpwczCmdV5boIZ6g/tlDrlRUbg=",
+        version = "v1.14.6",
     )
 
     go_repository(

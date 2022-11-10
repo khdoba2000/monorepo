@@ -3,7 +3,6 @@ package main
 import (
 	"net"
 
-	"google.golang.org/grpc/reflection"
 	"monorepo/src/auth_service/configs"
 	"monorepo/src/auth_service/pkg/db"
 	"monorepo/src/auth_service/service"
@@ -11,16 +10,18 @@ import (
 	pb "monorepo/src/idl/auth_service"
 	"monorepo/src/libs/logger"
 
+	"google.golang.org/grpc/reflection"
+
 	"google.golang.org/grpc"
 )
 
 func main() {
 
-	//Loaf configurations
+	//Load configurations
 	config := configs.Config()
 
 	//Create logger instance
-	log := logger.New(config.LogLevel, "AuthService")
+	log := logger.New()
 
 	//Cleanup logger when returning main func
 	defer func(l logger.Logger) {
@@ -34,7 +35,7 @@ func main() {
 	connDB, err := db.Init(*config)
 
 	if err != nil {
-		log.Fatal("grpc failed to listen: ", logger.Error(err))
+		log.Fatal("failed to connect with db: ", logger.Error(err))
 	}
 
 	log.Info("authService: sqlxConfig",
@@ -54,11 +55,15 @@ func main() {
 	pb.RegisterAuthServiceServer(grpcServer, authService)
 	reflection.Register(grpcServer)
 
-	lis, err := net.Listen("tcp", ":8084")
+	lis, err := net.Listen("tcp", config.RPCPort)
+	if err != nil {
+		log.Fatal("error while listening tcp", logger.Error(err))
+	}
+
 	if err := grpcServer.Serve(lis); err != nil {
 		log.Fatal("failed to serve: ", logger.Error(err))
 	}
 
-	log.Info("auth server running on port : ", logger.String("port", "8084"))
+	log.Info("crm server running on port : ", logger.String("port", config.RPCPort))
 
 }
