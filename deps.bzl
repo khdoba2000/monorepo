@@ -297,6 +297,13 @@ def go_dependencies():
         sum = "h1:otpy5pqBCBZ1ng9RQ0dPu4PN7ba75Y/aA+UpowDyNVA=",
         version = "v0.5.1",
     )
+    go_repository(
+        name = "com_github_go_ozzo_ozzo_validation_v3",
+        build_file_proto_mode = "disable_global",
+        importpath = "github.com/go-ozzo/ozzo-validation/v3",
+        sum = "h1:PcDzf3lgoWlFW8cxEpqD04zmRczXjn1CUN/AFPUJZK8=",
+        version = "v3.8.1",
+    )
 
     go_repository(
         name = "com_github_go_playground_assert_v2",
@@ -326,6 +333,14 @@ def go_dependencies():
         sum = "h1:I7mrTYv78z8k8VXa/qJlOlEXn/nBh+BF8dHX5nt/dr0=",
         version = "v10.10.0",
     )
+    go_repository(
+        name = "com_github_go_sql_driver_mysql",
+        build_file_proto_mode = "disable_global",
+        importpath = "github.com/go-sql-driver/mysql",
+        sum = "h1:BCTh4TKNUYmOmMUcQ3IipzF5prigylS7XXjEkfCHuOE=",
+        version = "v1.6.0",
+    )
+
     go_repository(
         name = "com_github_go_zookeeper_zk",
         build_file_proto_mode = "disable_global",
@@ -581,6 +596,13 @@ def go_dependencies():
         sum = "h1:BEgLn5cpjn8UN1mAw4NjwDrS35OdebyEtFe+9YPoQUg=",
         version = "v0.4.0",
     )
+    go_repository(
+        name = "com_github_jmoiron_sqlx",
+        build_file_proto_mode = "disable_global",
+        importpath = "github.com/jmoiron/sqlx",
+        sum = "h1:vFFPA71p1o5gAeqtEAwLU4dnX2napprKtHr7PYIcN3g=",
+        version = "v1.3.5",
+    )
 
     go_repository(
         name = "com_github_joho_godotenv",
@@ -664,6 +686,14 @@ def go_dependencies():
         version = "v1.2.1",
     )
     go_repository(
+        name = "com_github_lib_pq",
+        build_file_proto_mode = "disable_global",
+        importpath = "github.com/lib/pq",
+        sum = "h1:LXpIM/LZ5xGFhOpXAQUIMM1HdyqzVYM13zNdjCEEcA0=",
+        version = "v1.2.0",
+    )
+
+    go_repository(
         name = "com_github_magiconair_properties",
         build_file_proto_mode = "disable_global",
         importpath = "github.com/magiconair/properties",
@@ -685,6 +715,14 @@ def go_dependencies():
         sum = "h1:yVuAays6BHfxijgZPzw+3Zlu5yQgKGP2/hcQbHb7S9Y=",
         version = "v0.0.14",
     )
+    go_repository(
+        name = "com_github_mattn_go_sqlite3",
+        build_file_proto_mode = "disable_global",
+        importpath = "github.com/mattn/go-sqlite3",
+        sum = "h1:dNPt6NO46WmLVt2DLNpwczCmdV5boIZ6g/tlDrlRUbg=",
+        version = "v1.14.6",
+    )
+
     go_repository(
         name = "com_github_matttproud_golang_protobuf_extensions",
         build_file_proto_mode = "disable_global",
@@ -1461,6 +1499,13 @@ def go_dependencies():
         importpath = "dmitri.shuralyov.com/gpu/mtl",
         sum = "h1:VpgP7xuJadIUuKccphEpTJnWhS2jkQyMt6Y7pJCD7fY=",
         version = "v0.0.0-20190408044501-666a987793e9",
+    )
+    go_repository(
+        name = "in_gopkg_asaskevich_govalidator_v9",
+        build_file_proto_mode = "disable_global",
+        importpath = "gopkg.in/asaskevich/govalidator.v9",
+        sum = "h1:RVvpqSdNKxt6sENjmw0kdyyv8r18TdpmYTrvUUg2qkc=",
+        version = "v9.0.0-20180315120708-ccb8e960c48f",
     )
 
     go_repository(

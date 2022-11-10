@@ -39,7 +39,7 @@ func (ah *authHandler) TestHandler(w http.ResponseWriter, r *http.Request) {
 
 	ah.logger.For(r.Context()).Info("TestHandler hit")
 
-	ah.authClient.StaffSignUp(opentracing.ContextWithSpan(r.Context(), opentracing.SpanFromContext(r.Context())), &auth_service.CustomerSignUpRequest{Name: "name"})
+	ah.authClient.StaffSignUp(opentracing.ContextWithSpan(r.Context(), opentracing.SpanFromContext(r.Context())), &auth_service.StaffSignUpRequest{Name: "name"})
 
 	ah.logger.For(r.Context()).Info("TestHandler success")
 
