@@ -7,7 +7,14 @@ go_library(
     visibility = ["//visibility:public"],
     deps = [
         "//src/auth_service/configs",
+        "@com_github_golang_migrate_migrate_v4//:migrate",
+        "@com_github_golang_migrate_migrate_v4//database",
+        "@com_github_golang_migrate_migrate_v4//database/postgres",
+        "@com_github_golang_migrate_migrate_v4//source/file",
         "@com_github_jmoiron_sqlx//:sqlx",
+        "@com_github_joho_godotenv//autoload",
+        "@com_github_lib_pq//:pq",
+        "@org_uber_go_zap//:zap",
     ],
 )
 

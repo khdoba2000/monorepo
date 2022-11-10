@@ -23,35 +23,6 @@ func Config() *Configuration {
 	return instance
 }
 
-const (
-	// NewStatus enum
-	NewStatus = "new"
-	// SentStatus enum
-	SentStatus = "sent"
-	// SubscribeType enum
-	SubscribeType = "subscribe"
-	// PostType enum
-	PostType = "post"
-	// UnsubscribeType enum
-	UnsubscribeType = "unsubscribe"
-	// LikeType enum
-	LikeType = "like"
-	// JoinType enum
-	JoinType = "join"
-	// CommentType enum
-	CommentType = "comment"
-	// DislikeType enum
-	DislikeType = "dislike"
-	// Replied enum
-	Replied = "replied"
-	// TipType enum
-	TipType = "tip"
-	// PurchaseType enum
-	PurchaseType = "purchase"
-	// Email enum
-	Email = "email"
-)
-
 // Configuration ...
 type Configuration struct {
 	LogLevel    string `json:"log_level"`
