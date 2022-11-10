@@ -1,16 +1,12 @@
 package main
 
 import (
-	"context"
 	"fmt"
 	"monorepo/src/libs/log"
 	"monorepo/src/libs/tracer"
 	"net"
-	"time"
 
 	otgrpc "github.com/opentracing-contrib/go-grpc"
-	"github.com/opentracing/opentracing-go"
-	"github.com/opentracing/opentracing-go/ext"
 
 	jexpvar "github.com/uber/jaeger-lib/metrics/expvar"
 
@@ -25,29 +21,6 @@ import (
 	"go.uber.org/zap/zapcore"
 	"google.golang.org/grpc"
 )
-
-type authServer struct {
-	pb.UnimplementedAuthServiceServer
-	logger log.Factory
-	tracer opentracing.Tracer
-}
-
-func (s authServer) CustomerSignUp(ctx context.Context, r *pb.CustomerSignUpRequest) (*pb.AuthResponse, error) {
-
-	s.logger.For(ctx).Info("CustomerSignUp req", zap.String("name", r.Name))
-
-	if span := opentracing.SpanFromContext(ctx); span != nil {
-		span := s.tracer.StartSpan("Query database", opentracing.ChildOf(span.Context()))
-		span.SetTag("param.name", r.Name)
-		ext.SpanKindRPCClient.Set(span)
-		defer span.Finish()
-		ctx = opentracing.ContextWithSpan(ctx, span)
-	}
-	//simulate signup reg
-	time.Sleep(1 * time.Second)
-
-	return &pb.AuthResponse{AccessToken: "access", RefreshToken: "refresh"}, nil
-}
 
 func main() {
 
@@ -67,7 +40,6 @@ func main() {
 
 	//Initialize database, make a connection with postgres
 	connDB, err := db.Init(*config)
-
 	if err != nil {
 		fmt.Println("failed to connect with db: ", err)
 	}
@@ -95,7 +67,7 @@ func main() {
 	logger := log.NewFactory(zapLogger)
 
 	// Make an authentication service instance
-	authServer := service.New(storage, logger, tracer)
+	authServer := service.New(storage.New(connDB), logger, tracer)
 	pb.RegisterAuthServiceServer(grpcServer, authServer)
 
 	//listenting tcp rpcport
