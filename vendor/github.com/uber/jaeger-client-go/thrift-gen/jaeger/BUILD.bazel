@@ -1,0 +1,20 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "jaeger",
+    srcs = [
+        "GoUnusedProtection__.go",
+        "jaeger.go",
+        "jaeger-consts.go",
+    ],
+    importmap = "monorepo/vendor/github.com/uber/jaeger-client-go/thrift-gen/jaeger",
+    importpath = "github.com/uber/jaeger-client-go/thrift-gen/jaeger",
+    visibility = ["//visibility:public"],
+    deps = ["//vendor/github.com/uber/jaeger-client-go/thrift"],
+)
+
+alias(
+    name = "go_default_library",
+    actual = ":jaeger",
+    visibility = ["//visibility:public"],
+)

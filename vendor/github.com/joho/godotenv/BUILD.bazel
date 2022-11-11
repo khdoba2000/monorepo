@@ -1,0 +1,15 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "godotenv",
+    srcs = ["godotenv.go"],
+    importmap = "monorepo/vendor/github.com/joho/godotenv",
+    importpath = "github.com/joho/godotenv",
+    visibility = ["//visibility:public"],
+)
+
+alias(
+    name = "go_default_library",
+    actual = ":godotenv",
+    visibility = ["//visibility:public"],
+)

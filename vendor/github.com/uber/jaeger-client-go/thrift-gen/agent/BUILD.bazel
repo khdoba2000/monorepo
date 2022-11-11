@@ -1,0 +1,24 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "agent",
+    srcs = [
+        "GoUnusedProtection__.go",
+        "agent.go",
+        "agent-consts.go",
+    ],
+    importmap = "monorepo/vendor/github.com/uber/jaeger-client-go/thrift-gen/agent",
+    importpath = "github.com/uber/jaeger-client-go/thrift-gen/agent",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//vendor/github.com/uber/jaeger-client-go/thrift",
+        "//vendor/github.com/uber/jaeger-client-go/thrift-gen/jaeger",
+        "//vendor/github.com/uber/jaeger-client-go/thrift-gen/zipkincore",
+    ],
+)
+
+alias(
+    name = "go_default_library",
+    actual = ":agent",
+    visibility = ["//visibility:public"],
+)

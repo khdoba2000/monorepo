@@ -1,0 +1,16 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "locales",
+    srcs = ["rules.go"],
+    importmap = "monorepo/vendor/github.com/go-playground/locales",
+    importpath = "github.com/go-playground/locales",
+    visibility = ["//visibility:public"],
+    deps = ["//vendor/github.com/go-playground/locales/currency"],
+)
+
+alias(
+    name = "go_default_library",
+    actual = ":locales",
+    visibility = ["//visibility:public"],
+)

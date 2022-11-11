@@ -5,7 +5,7 @@ go_library(
     srcs = ["jwt.go"],
     importpath = "monorepo/src/libs/jwt",
     visibility = ["//visibility:public"],
-    deps = ["@com_github_dgrijalva_jwt_go//:jwt-go"],
+    deps = ["//vendor/github.com/dgrijalva/jwt-go"],
 )
 
 alias(

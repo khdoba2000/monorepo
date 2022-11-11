@@ -1,0 +1,25 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "persist",
+    srcs = [
+        "adapter.go",
+        "adapter_filtered.go",
+        "batch_adapter.go",
+        "dispatcher.go",
+        "update_adapter.go",
+        "watcher.go",
+        "watcher_ex.go",
+        "watcher_update.go",
+    ],
+    importmap = "monorepo/vendor/github.com/casbin/casbin/v2/persist",
+    importpath = "github.com/casbin/casbin/v2/persist",
+    visibility = ["//visibility:public"],
+    deps = ["//vendor/github.com/casbin/casbin/v2/model"],
+)
+
+alias(
+    name = "go_default_library",
+    actual = ":persist",
+    visibility = ["//visibility:public"],
+)

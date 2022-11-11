@@ -1,0 +1,15 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "scram",
+    srcs = ["scram.go"],
+    importmap = "monorepo/vendor/github.com/lib/pq/scram",
+    importpath = "github.com/lib/pq/scram",
+    visibility = ["//visibility:public"],
+)
+
+alias(
+    name = "go_default_library",
+    actual = ":scram",
+    visibility = ["//visibility:public"],
+)

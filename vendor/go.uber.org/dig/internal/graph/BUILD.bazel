@@ -1,0 +1,15 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "graph",
+    srcs = ["graph.go"],
+    importmap = "monorepo/vendor/go.uber.org/dig/internal/graph",
+    importpath = "go.uber.org/dig/internal/graph",
+    visibility = ["//vendor/go.uber.org/dig:__subpackages__"],
+)
+
+alias(
+    name = "go_default_library",
+    actual = ":graph",
+    visibility = ["//vendor/go.uber.org/dig:__subpackages__"],
+)

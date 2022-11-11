@@ -1,0 +1,38 @@
+load("@rules_proto//proto:defs.bzl", "proto_library")
+load("@io_bazel_rules_go//proto:def.bzl", "go_proto_library")
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+load("@golink//proto:proto.bzl", "go_proto_link")
+
+go_library(
+    name = "customer_service",
+    embed = [":customer_go_proto"],
+    importpath = "monorepo/src/idl/customer_service",
+    visibility = ["//visibility:public"],
+)
+
+alias(
+    name = "go_default_library",
+    actual = ":customer_service",
+    visibility = ["//visibility:public"],
+)
+
+go_proto_link(
+    name = "customer_go_proto_link",
+    dep = ":customer_go_proto",
+    version = "v1",
+)
+
+proto_library(
+    name = "customer_proto",
+    srcs = ["customer_service.proto"],
+    visibility = ["//visibility:public"],
+    deps = ["@com_google_protobuf//:empty_proto"],
+)
+
+go_proto_library(
+    name = "customer_go_proto",
+    compilers = ["@io_bazel_rules_go//proto:go_grpc"],
+    importpath = "monorepo/src/idl/customer_service",
+    proto = ":customer_proto",
+    visibility = ["//visibility:public"],
+)

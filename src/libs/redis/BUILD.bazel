@@ -5,7 +5,7 @@ go_library(
     srcs = ["redis.go"],
     importpath = "monorepo/src/libs/redis",
     visibility = ["//visibility:public"],
-    deps = ["@com_github_gomodule_redigo//redis"],
+    deps = ["//vendor/github.com/gomodule/redigo/redis"],
 )
 
 alias(

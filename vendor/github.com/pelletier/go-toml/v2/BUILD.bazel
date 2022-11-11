@@ -1,0 +1,32 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "go-toml",
+    srcs = [
+        "decode.go",
+        "doc.go",
+        "errors.go",
+        "localtime.go",
+        "marshaler.go",
+        "parser.go",
+        "scanner.go",
+        "strict.go",
+        "types.go",
+        "unmarshaler.go",
+        "utf8.go",
+    ],
+    importmap = "monorepo/vendor/github.com/pelletier/go-toml/v2",
+    importpath = "github.com/pelletier/go-toml/v2",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//vendor/github.com/pelletier/go-toml/v2/internal/ast",
+        "//vendor/github.com/pelletier/go-toml/v2/internal/danger",
+        "//vendor/github.com/pelletier/go-toml/v2/internal/tracker",
+    ],
+)
+
+alias(
+    name = "go_default_library",
+    actual = ":go-toml",
+    visibility = ["//visibility:public"],
+)

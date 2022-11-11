@@ -1,0 +1,15 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "baggage",
+    srcs = ["restriction_manager.go"],
+    importmap = "monorepo/vendor/github.com/uber/jaeger-client-go/internal/baggage",
+    importpath = "github.com/uber/jaeger-client-go/internal/baggage",
+    visibility = ["//vendor/github.com/uber/jaeger-client-go:__subpackages__"],
+)
+
+alias(
+    name = "go_default_library",
+    actual = ":baggage",
+    visibility = ["//vendor/github.com/uber/jaeger-client-go:__subpackages__"],
+)

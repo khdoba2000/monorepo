@@ -1,0 +1,25 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "nethttp",
+    srcs = [
+        "client.go",
+        "doc.go",
+        "server.go",
+        "status-code-tracker.go",
+    ],
+    importmap = "monorepo/vendor/github.com/opentracing-contrib/go-stdlib/nethttp",
+    importpath = "github.com/opentracing-contrib/go-stdlib/nethttp",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//vendor/github.com/opentracing/opentracing-go",
+        "//vendor/github.com/opentracing/opentracing-go/ext",
+        "//vendor/github.com/opentracing/opentracing-go/log",
+    ],
+)
+
+alias(
+    name = "go_default_library",
+    actual = ":nethttp",
+    visibility = ["//visibility:public"],
+)

@@ -1,0 +1,28 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "model",
+    srcs = [
+        "assertion.go",
+        "function.go",
+        "model.go",
+        "policy.go",
+    ],
+    importmap = "monorepo/vendor/github.com/casbin/casbin/v2/model",
+    importpath = "github.com/casbin/casbin/v2/model",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//vendor/github.com/Knetic/govaluate",
+        "//vendor/github.com/casbin/casbin/v2/config",
+        "//vendor/github.com/casbin/casbin/v2/constant",
+        "//vendor/github.com/casbin/casbin/v2/log",
+        "//vendor/github.com/casbin/casbin/v2/rbac",
+        "//vendor/github.com/casbin/casbin/v2/util",
+    ],
+)
+
+alias(
+    name = "go_default_library",
+    actual = ":model",
+    visibility = ["//visibility:public"],
+)

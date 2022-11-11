@@ -1,0 +1,25 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "vm_indent",
+    srcs = [
+        "debug_vm.go",
+        "hack.go",
+        "util.go",
+        "vm.go",
+    ],
+    importmap = "monorepo/vendor/github.com/goccy/go-json/internal/encoder/vm_indent",
+    importpath = "github.com/goccy/go-json/internal/encoder/vm_indent",
+    visibility = ["//vendor/github.com/goccy/go-json:__subpackages__"],
+    deps = [
+        "//vendor/github.com/goccy/go-json/internal/encoder",
+        "//vendor/github.com/goccy/go-json/internal/encoder/vm_color",
+        "//vendor/github.com/goccy/go-json/internal/runtime",
+    ],
+)
+
+alias(
+    name = "go_default_library",
+    actual = ":vm_indent",
+    visibility = ["//vendor/github.com/goccy/go-json:__subpackages__"],
+)

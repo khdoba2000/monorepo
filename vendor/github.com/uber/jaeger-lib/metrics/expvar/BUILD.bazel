@@ -1,0 +1,21 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "expvar",
+    srcs = ["factory.go"],
+    importmap = "monorepo/vendor/github.com/uber/jaeger-lib/metrics/expvar",
+    importpath = "github.com/uber/jaeger-lib/metrics/expvar",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//vendor/github.com/uber/jaeger-lib/metrics",
+        "//vendor/github.com/uber/jaeger-lib/metrics/adapters",
+        "//vendor/github.com/uber/jaeger-lib/metrics/go-kit",
+        "//vendor/github.com/uber/jaeger-lib/metrics/go-kit/expvar",
+    ],
+)
+
+alias(
+    name = "go_default_library",
+    actual = ":expvar",
+    visibility = ["//visibility:public"],
+)

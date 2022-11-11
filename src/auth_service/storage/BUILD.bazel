@@ -8,7 +8,7 @@ go_library(
     deps = [
         "//src/auth_service/storage/postgres",
         "//src/auth_service/storage/repo",
-        "@com_github_jmoiron_sqlx//:sqlx",
+        "//vendor/github.com/jmoiron/sqlx",
     ],
 )
 

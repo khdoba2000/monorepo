@@ -12,10 +12,10 @@ go_library(
     deps = [
         "//src/api_gateway/configs",
         "//src/libs/jwt",
-        "@com_github_dgrijalva_jwt_go//:jwt-go",
-        "@com_github_google_uuid//:uuid",
-        "@org_golang_google_grpc//codes",
-        "@org_golang_google_grpc//status",
+        "//vendor/github.com/dgrijalva/jwt-go",
+        "//vendor/github.com/google/uuid",
+        "//vendor/google.golang.org/grpc/codes",
+        "//vendor/google.golang.org/grpc/status",
     ],
 )
 

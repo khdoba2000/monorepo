@@ -1,0 +1,24 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "file-adapter",
+    srcs = [
+        "adapter.go",
+        "adapter_filtered.go",
+        "adapter_mock.go",
+    ],
+    importmap = "monorepo/vendor/github.com/casbin/casbin/v2/persist/file-adapter",
+    importpath = "github.com/casbin/casbin/v2/persist/file-adapter",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//vendor/github.com/casbin/casbin/v2/model",
+        "//vendor/github.com/casbin/casbin/v2/persist",
+        "//vendor/github.com/casbin/casbin/v2/util",
+    ],
+)
+
+alias(
+    name = "go_default_library",
+    actual = ":file-adapter",
+    visibility = ["//visibility:public"],
+)

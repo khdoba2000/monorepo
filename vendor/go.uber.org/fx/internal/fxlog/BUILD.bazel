@@ -1,0 +1,19 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "fxlog",
+    srcs = [
+        "default.go",
+        "spy.go",
+    ],
+    importmap = "monorepo/vendor/go.uber.org/fx/internal/fxlog",
+    importpath = "go.uber.org/fx/internal/fxlog",
+    visibility = ["//vendor/go.uber.org/fx:__subpackages__"],
+    deps = ["//vendor/go.uber.org/fx/fxevent"],
+)
+
+alias(
+    name = "go_default_library",
+    actual = ":fxlog",
+    visibility = ["//vendor/go.uber.org/fx:__subpackages__"],
+)

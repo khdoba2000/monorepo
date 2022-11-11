@@ -1,0 +1,19 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "gohistogram",
+    srcs = [
+        "histogram.go",
+        "numerichistogram.go",
+        "weightedhistogram.go",
+    ],
+    importmap = "monorepo/vendor/github.com/VividCortex/gohistogram",
+    importpath = "github.com/VividCortex/gohistogram",
+    visibility = ["//visibility:public"],
+)
+
+alias(
+    name = "go_default_library",
+    actual = ":gohistogram",
+    visibility = ["//visibility:public"],
+)

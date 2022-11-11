@@ -1,0 +1,20 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "ast",
+    srcs = [
+        "ast.go",
+        "builder.go",
+        "kind.go",
+    ],
+    importmap = "monorepo/vendor/github.com/pelletier/go-toml/v2/internal/ast",
+    importpath = "github.com/pelletier/go-toml/v2/internal/ast",
+    visibility = ["//vendor/github.com/pelletier/go-toml/v2:__subpackages__"],
+    deps = ["//vendor/github.com/pelletier/go-toml/v2/internal/danger"],
+)
+
+alias(
+    name = "go_default_library",
+    actual = ":ast",
+    visibility = ["//vendor/github.com/pelletier/go-toml/v2:__subpackages__"],
+)

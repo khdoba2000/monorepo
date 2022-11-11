@@ -1,0 +1,19 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "effector",
+    srcs = [
+        "default_effector.go",
+        "effector.go",
+    ],
+    importmap = "monorepo/vendor/github.com/casbin/casbin/v2/effector",
+    importpath = "github.com/casbin/casbin/v2/effector",
+    visibility = ["//visibility:public"],
+    deps = ["//vendor/github.com/casbin/casbin/v2/constant"],
+)
+
+alias(
+    name = "go_default_library",
+    actual = ":effector",
+    visibility = ["//visibility:public"],
+)

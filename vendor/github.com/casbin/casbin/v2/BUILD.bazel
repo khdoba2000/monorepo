@@ -1,0 +1,43 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "casbin",
+    srcs = [
+        "enforcer.go",
+        "enforcer_cached.go",
+        "enforcer_distributed.go",
+        "enforcer_interface.go",
+        "enforcer_synced.go",
+        "frontend.go",
+        "frontend_old.go",
+        "internal_api.go",
+        "management_api.go",
+        "rbac_api.go",
+        "rbac_api_synced.go",
+        "rbac_api_with_domains.go",
+        "rbac_api_with_domains_synced.go",
+    ],
+    importmap = "monorepo/vendor/github.com/casbin/casbin/v2",
+    importpath = "github.com/casbin/casbin/v2",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//vendor/github.com/Knetic/govaluate",
+        "//vendor/github.com/casbin/casbin/v2/constant",
+        "//vendor/github.com/casbin/casbin/v2/effector",
+        "//vendor/github.com/casbin/casbin/v2/errors",
+        "//vendor/github.com/casbin/casbin/v2/log",
+        "//vendor/github.com/casbin/casbin/v2/model",
+        "//vendor/github.com/casbin/casbin/v2/persist",
+        "//vendor/github.com/casbin/casbin/v2/persist/cache",
+        "//vendor/github.com/casbin/casbin/v2/persist/file-adapter",
+        "//vendor/github.com/casbin/casbin/v2/rbac",
+        "//vendor/github.com/casbin/casbin/v2/rbac/default-role-manager",
+        "//vendor/github.com/casbin/casbin/v2/util",
+    ],
+)
+
+alias(
+    name = "go_default_library",
+    actual = ":casbin",
+    visibility = ["//visibility:public"],
+)

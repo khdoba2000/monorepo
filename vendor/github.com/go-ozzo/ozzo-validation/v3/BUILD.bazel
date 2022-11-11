@@ -1,0 +1,31 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "ozzo-validation",
+    srcs = [
+        "date.go",
+        "each.go",
+        "error.go",
+        "in.go",
+        "length.go",
+        "match.go",
+        "minmax.go",
+        "multipleof.go",
+        "not_in.go",
+        "not_nil.go",
+        "required.go",
+        "string.go",
+        "struct.go",
+        "util.go",
+        "validation.go",
+    ],
+    importmap = "monorepo/vendor/github.com/go-ozzo/ozzo-validation/v3",
+    importpath = "github.com/go-ozzo/ozzo-validation/v3",
+    visibility = ["//visibility:public"],
+)
+
+alias(
+    name = "go_default_library",
+    actual = ":ozzo-validation",
+    visibility = ["//visibility:public"],
+)

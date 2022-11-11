@@ -1,0 +1,19 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "hcl",
+    srcs = ["codec.go"],
+    importmap = "monorepo/vendor/github.com/spf13/viper/internal/encoding/hcl",
+    importpath = "github.com/spf13/viper/internal/encoding/hcl",
+    visibility = ["//vendor/github.com/spf13/viper:__subpackages__"],
+    deps = [
+        "//vendor/github.com/hashicorp/hcl",
+        "//vendor/github.com/hashicorp/hcl/hcl/printer",
+    ],
+)
+
+alias(
+    name = "go_default_library",
+    actual = ":hcl",
+    visibility = ["//vendor/github.com/spf13/viper:__subpackages__"],
+)

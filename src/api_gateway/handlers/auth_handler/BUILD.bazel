@@ -12,7 +12,7 @@ go_library(
         "//src/api_gateway/utils",
         "//src/idl/auth_service",
         "//src/libs/log",
-        "@com_github_opentracing_opentracing_go//:opentracing-go",
+        "//vendor/github.com/opentracing/opentracing-go",
     ],
 )
 
