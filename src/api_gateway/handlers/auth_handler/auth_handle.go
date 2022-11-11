@@ -2,7 +2,6 @@ package auth_handler
 
 import (
 	"context"
-	"fmt"
 	"monorepo/src/api_gateway/configs"
 	"monorepo/src/api_gateway/dependencies"
 	"monorepo/src/api_gateway/models"
@@ -22,6 +21,7 @@ import (
 type AuthHandlers interface {
 	TestHandler(w http.ResponseWriter, r *http.Request)
 	StuffLogin(w http.ResponseWriter, r *http.Request)
+	ResetPassword(w http.ResponseWriter, r *http.Request)
 }
 
 type authHandler struct {
@@ -113,14 +113,23 @@ func (ah *authHandler) ResetPassword(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	// hashing new password
 	hashedPassword, err := etc.GeneratePasswordHash(body.NewPassword)
 	if err != nil {
 		u.HandleInternalWithMessage(w, err, "error occured whiling hashing new password")
 	}
 
-	// this is just to avoid unused variable error. Later we will send it to service where this hashed password will be saved to database
-	fmt.Println(hashedPassword)
-	// here we should update password from databse
+	// sending password and satff id to auth_service to update existing password to news one in database
+	_, err = ah.authClient.StaffResetPassword(context.Background(), &auth_service.StaffResetPasswordRequest{
+		StaffID:     "", // staff id should be taken from token
+		NewPassword: string(hashedPassword),
+	})
+
+	// handling error comes from grpc
+	if err != nil {
+		u.HandleGrpcErrWithMessage(w, err)
+		return
+	}
 
 	w.WriteHeader(http.StatusOK)
 }
