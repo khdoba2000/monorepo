@@ -8,4 +8,6 @@ import (
 
 func RegisterCustomerRoutes(r *tracing.TracedServeMux, h *handlers.Handlers) {
 	r.Handle("/customer/test2", http.HandlerFunc(h.CustomerHandlers.TestHandler2))
+	r.Handle("/customer/send-code", http.HandlerFunc(h.CustomerHandlers.SendCodeHandler))
+	r.Handle("/customer/verfy-code", http.HandlerFunc(h.CustomerHandlers.VerfyCodeHandler))
 }
