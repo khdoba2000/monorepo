@@ -6,11 +6,7 @@ go_library(
     importpath = "monorepo/src/auth_service/storage/repo",
     visibility = ["//visibility:public"],
     deps = [
-<<<<<<< HEAD
-        "//src/auth_service/pkg/mappers",
-=======
         "//src/auth_service/pkg/entity",
->>>>>>> ff14acd4c005b618b920ba8280729b34df19f4c2
         "//src/idl/auth_service",
     ],
 )

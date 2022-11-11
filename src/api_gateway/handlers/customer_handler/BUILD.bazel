@@ -5,14 +5,7 @@ go_library(
     srcs = ["customer_handler.go"],
     importpath = "monorepo/src/api_gateway/handlers/customer_handler",
     visibility = ["//visibility:public"],
-    deps = [
-        "//src/api_gateway/models",
-        "//src/api_gateway/utils",
-        "//src/libs/etc",
-        "//src/libs/log",
-        "//src/libs/redis",
-        "//src/libs/utils",
-    ],
+    deps = ["//src/libs/log"],
 )
 
 alias(
