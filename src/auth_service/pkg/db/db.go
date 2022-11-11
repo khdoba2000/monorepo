@@ -2,7 +2,17 @@ package db
 
 import (
 	"fmt"
+	"log"
 	"monorepo/src/auth_service/configs"
+
+	"github.com/golang-migrate/migrate/v4"
+	_ "github.com/golang-migrate/migrate/v4/database"
+	_ "github.com/golang-migrate/migrate/v4/database/postgres"
+	_ "github.com/golang-migrate/migrate/v4/source/file"
+	_ "github.com/joho/godotenv/autoload" // load .env file automatically
+	"go.uber.org/zap"
+
+	_ "github.com/lib/pq"
 
 	"github.com/jmoiron/sqlx"
 )
@@ -10,15 +20,17 @@ import (
 // Initialize database connection then connect with postgres
 func Init(config configs.Configuration) (*sqlx.DB, error) {
 
-	dbUrl := fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s sslmode=disable",
-		config.PostgresHost,
-		config.PostgresPort,
-		config.PostgresUser,
-		config.PostgresPassword,
-		config.PostgresDatabase,
-	)
+	dbURL := fmt.Sprintf("postgres://%s:%s@%s:%d/%s?sslmode=disable", config.PostgresUser, config.PostgresPassword, config.PostgresHost, config.PostgresPort, config.PostgresDatabase)
+	m, err := migrate.New("file://src/auth_service/pkg/db/migrations", dbURL)
+	if err != nil {
+		log.Fatal("error in creating migrations: ", zap.Error(err))
+	}
+	fmt.Printf("")
+	if err := m.Up(); err != nil {
+		log.Println("error updating migrations: ", zap.Error(err))
+	}
 
-	db, err := sqlx.Connect("postgres", dbUrl)
+	db, err := sqlx.Connect("postgres", dbURL)
 	if err != nil {
 		return nil, err
 		// panic(err)
