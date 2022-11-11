@@ -9,5 +9,5 @@ import (
 func RegisterAuthRoutes(r *tracing.TracedServeMux, h *handlers.Handlers) {
 	r.Handle("/auth/test1", http.HandlerFunc(h.AuthHandlers.TestHandler))
 	r.Handle("/auth/staff-login/", http.HandlerFunc(h.AuthHandlers.StuffLogin))
-	r.Handle("/auth/staff/reset/password", http.HandlerFunc(h.AuthHandlers.StuffLogin))
+	r.Handle("/auth/staff/reset/password", http.HandlerFunc(h.AuthHandlers.ResetPassword))
 }
