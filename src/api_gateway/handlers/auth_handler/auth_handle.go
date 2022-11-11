@@ -139,7 +139,7 @@ func (ah *authHandler) ResetPassword(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
 }
 
-func (ch *authHandler) SendCodeHandler(w http.ResponseWriter, r *http.Request) {
+func (ah *authHandler) SendCodeHandler(w http.ResponseWriter, r *http.Request) {
 	// read body from request
 	var body models.ReqSendCode
 	if err := utils.BodyParser(r, body); err != nil {
@@ -163,7 +163,7 @@ func (ch *authHandler) SendCodeHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// save login value and code to the redis
-	if err := ch.redisDB.Set(body.LoginValue, code); err != nil {
+	if err := ah.redisDB.Set(body.LoginValue, code); err != nil {
 		utils.HandleInternalWithMessage(w, err, "error in setting data to redis")
 		return
 	}
@@ -172,7 +172,7 @@ func (ch *authHandler) SendCodeHandler(w http.ResponseWriter, r *http.Request) {
 
 }
 
-func (ch *authHandler) VerfyCodeHandler(w http.ResponseWriter, r *http.Request) {
+func (ah *authHandler) VerfyCodeHandler(w http.ResponseWriter, r *http.Request) {
 
 	// read body from request
 	var body models.ReqCheckCode
@@ -188,7 +188,7 @@ func (ch *authHandler) VerfyCodeHandler(w http.ResponseWriter, r *http.Request) 
 	}
 
 	// get code associated with given login value
-	i, err := ch.redisDB.Get(body.LoginValue)
+	i, err := ah.redisDB.Get(body.LoginValue)
 	if err != nil {
 		utils.HandleInternalWithMessage(w, err, "error in reading from redis")
 		return
