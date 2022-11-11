@@ -15,12 +15,12 @@ go_library(
         "//src/api_gateway/routers",
         "//src/libs/log",
         "//src/libs/tracer",
-        "//vendor/github.com/opentracing/opentracing-go",
-        "//vendor/github.com/uber/jaeger-lib/metrics/expvar",
-        "//vendor/go.uber.org/fx",
-        "//vendor/go.uber.org/fx/fxevent",
-        "//vendor/go.uber.org/zap",
-        "//vendor/go.uber.org/zap/zapcore",
+        "@com_github_opentracing_opentracing_go//:opentracing-go",
+        "@com_github_uber_jaeger_lib//metrics/expvar",
+        "@org_uber_go_fx//:fx",
+        "@org_uber_go_fx//fxevent",
+        "@org_uber_go_zap//:zap",
+        "@org_uber_go_zap//zapcore",
     ],
 )
 

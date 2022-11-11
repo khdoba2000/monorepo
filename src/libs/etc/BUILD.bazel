@@ -8,7 +8,7 @@ go_library(
     ],
     importpath = "monorepo/src/libs/etc",
     visibility = ["//visibility:public"],
-    deps = ["//vendor/golang.org/x/crypto/bcrypt"],
+    deps = ["@org_golang_x_crypto//bcrypt"],
 )
 
 alias(

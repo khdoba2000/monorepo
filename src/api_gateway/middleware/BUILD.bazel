@@ -12,7 +12,7 @@ go_library(
     deps = [
         "//src/api_gateway/configs",
         "//src/libs/jwt",
-        "//vendor/github.com/casbin/casbin/v2:casbin",
+        "@com_github_casbin_casbin_v2//:casbin",
     ],
 )
 

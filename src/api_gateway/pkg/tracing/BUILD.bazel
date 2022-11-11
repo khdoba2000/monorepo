@@ -8,9 +8,9 @@ go_library(
     deps = [
         "//src/api_gateway/configs",
         "//src/api_gateway/middleware",
-        "//vendor/github.com/gorilla/mux",
-        "//vendor/github.com/opentracing-contrib/go-stdlib/nethttp",
-        "//vendor/github.com/opentracing/opentracing-go",
+        "@com_github_gorilla_mux//:mux",
+        "@com_github_opentracing_contrib_go_stdlib//nethttp",
+        "@com_github_opentracing_opentracing_go//:opentracing-go",
     ],
 )
 

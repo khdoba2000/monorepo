@@ -8,10 +8,10 @@ go_library(
     deps = [
         "//src/api_gateway/configs",
         "//src/idl/auth_service",
-        "//vendor/github.com/opentracing-contrib/go-grpc",
-        "//vendor/github.com/opentracing/opentracing-go",
-        "//vendor/google.golang.org/grpc",
-        "//vendor/google.golang.org/grpc/credentials/insecure",
+        "@com_github_opentracing_contrib_go_grpc//:go-grpc",
+        "@com_github_opentracing_opentracing_go//:opentracing-go",
+        "@org_golang_google_grpc//:go_default_library",
+        "@org_golang_google_grpc//credentials/insecure",
     ],
 )
 

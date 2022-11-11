@@ -7,13 +7,13 @@ go_library(
     visibility = ["//visibility:private"],
     deps = [
         "//src/libs/hello",
-        "//vendor/github.com/gin-gonic/gin",
-        "//vendor/github.com/opentracing/opentracing-go",
-        "//vendor/github.com/opentracing/opentracing-go/ext",
-        "//vendor/github.com/uber/jaeger-client-go",
-        "//vendor/github.com/uber/jaeger-client-go/config",
-        "//vendor/github.com/uber/jaeger-client-go/log",
-        "//vendor/github.com/uber/jaeger-lib/metrics",
+        "@com_github_gin_gonic_gin//:gin",
+        "@com_github_opentracing_opentracing_go//:opentracing-go",
+        "@com_github_opentracing_opentracing_go//ext",
+        "@com_github_uber_jaeger_client_go//:jaeger-client-go",
+        "@com_github_uber_jaeger_client_go//config",
+        "@com_github_uber_jaeger_client_go//log",
+        "@com_github_uber_jaeger_lib//metrics",
     ],
 )
 
