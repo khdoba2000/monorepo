@@ -12,7 +12,10 @@
     bazel run //:gazelle
 
 # To generate protos
-    bazel query 'kind("proto_link", //...)'  | xargs bazel runs
+    1. get all proto target names
+        make list-proto-targets
+    2. run the target you want
+        bazel run (targetName)
 
 # To build
     bazel build //...
