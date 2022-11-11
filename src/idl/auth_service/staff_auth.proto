@@ -2,11 +2,13 @@ syntax="proto3";
 
 package auth_service;
 
-
 service AuthService {
     rpc StaffLogin(StaffLoginRequest) returns (AuthResponse){}
     rpc StaffSignUp(StaffSignUpRequest) returns (AuthResponse){}
+    rpc StaffResetPassword(StaffResetPasswordRequest) returns (Empty){}
 }
+
+message Empty {}
 
 message AuthResponse {
     string id = 1;
@@ -27,4 +29,9 @@ message StaffSignUpRequest {
     string phoneNumber = 4;
     string role = 5;
     string branchId = 6;
+}
+
+message StaffResetPasswordRequest {
+    string staffID = 1;
+    string newPassword = 2;
 }

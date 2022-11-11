@@ -4,6 +4,7 @@ import (
 	"context"
 	"database/sql"
 	"errors"
+	"monorepo/src/auth_service/pkg/entity"
 	"monorepo/src/auth_service/storage"
 	pb "monorepo/src/idl/auth_service"
 	"monorepo/src/libs/log"
@@ -73,4 +74,22 @@ func (as *AuthService) StaffSignUp(ctx context.Context, req *pb.StaffSignUpReque
 	as.logger.For(ctx).Info("StaffSignUp finished", zap.String("PhoneNumber", req.PhoneNumber), zap.String("Username", req.Username))
 
 	return &res, nil
+}
+
+func (as *AuthService) StaffResetPassword(ctx context.Context, req *pb.StaffResetPasswordRequest) (*pb.Empty, error) {
+	as.logger.For(ctx).Info("StaffResetPassword started", zap.String("StaffID", req.StaffID))
+
+	err := as.storage.Authenitication().StaffResetPassword(ctx, entity.ReqResetPassword{
+		StaffID:     req.StaffID,
+		NewPassword: req.NewPassword,
+	})
+
+	if err != nil {
+		as.logger.For(ctx).Error("failed to reset staff's password", zap.Error(err))
+		return &pb.Empty{}, status.Error(codes.Internal, err.Error())
+	}
+
+	as.logger.For(ctx).Info("StaffResetPassword finished", zap.String("StaffID", req.StaffID))
+
+	return &pb.Empty{}, nil
 }

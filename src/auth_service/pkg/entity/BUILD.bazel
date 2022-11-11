@@ -1,0 +1,14 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "entity",
+    srcs = ["entity.go"],
+    importpath = "monorepo/src/auth_service/pkg/entity",
+    visibility = ["//visibility:public"],
+)
+
+alias(
+    name = "go_default_library",
+    actual = ":entity",
+    visibility = ["//visibility:public"],
+)
