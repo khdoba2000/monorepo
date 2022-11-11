@@ -1,0 +1,22 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "server",
+    srcs = ["grpc.go"],
+    importpath = "monorepo/src/customer_service/server",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//src/customer_service/configs",
+        "//src/customer_service/service",
+        "//src/idl/customer_service",
+        "@com_github_opentracing_contrib_go_grpc//:go-grpc",
+        "@com_github_opentracing_opentracing_go//:opentracing-go",
+        "@org_golang_google_grpc//:go_default_library",
+    ],
+)
+
+alias(
+    name = "go_default_library",
+    actual = ":server",
+    visibility = ["//visibility:public"],
+)

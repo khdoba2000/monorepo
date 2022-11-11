@@ -1,0 +1,19 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "db",
+    srcs = ["db.go"],
+    importpath = "monorepo/src/customer_service/pkg/db",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//src/customer_service/configs",
+        "@com_github_jmoiron_sqlx//:sqlx",
+        "@com_github_lib_pq//:pq",
+    ],
+)
+
+alias(
+    name = "go_default_library",
+    actual = ":db",
+    visibility = ["//visibility:public"],
+)

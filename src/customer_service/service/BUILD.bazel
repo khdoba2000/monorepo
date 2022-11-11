@@ -1,0 +1,22 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "service",
+    srcs = ["customer.go"],
+    importpath = "monorepo/src/customer_service/service",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//src/customer_service/storage",
+        "//src/idl/customer_service",
+        "//src/libs/log",
+        "@com_github_opentracing_opentracing_go//:opentracing-go",
+        "@org_golang_google_protobuf//types/known/emptypb",
+        "@org_uber_go_zap//:zap",
+    ],
+)
+
+alias(
+    name = "go_default_library",
+    actual = ":service",
+    visibility = ["//visibility:public"],
+)

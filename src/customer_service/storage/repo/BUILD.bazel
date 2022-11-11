@@ -1,0 +1,14 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "repo",
+    srcs = ["customer.go"],
+    importpath = "monorepo/src/customer_service/storage/repo",
+    visibility = ["//visibility:public"],
+)
+
+alias(
+    name = "go_default_library",
+    actual = ":repo",
+    visibility = ["//visibility:public"],
+)
