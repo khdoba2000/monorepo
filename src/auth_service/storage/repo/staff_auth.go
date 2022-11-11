@@ -8,7 +8,7 @@ import (
 
 // Defining Base interface for Authentication
 type IAuthStorage interface {
-	StaffLogin(pb.StaffLoginRequest) (pb.AuthResponse, error)
-	StaffSignUp(pb.StaffSignUpRequest) (pb.AuthResponse, error)
+	StaffLogin(*entity.StaffLoginReq) (pb.AuthResponse, error)
+	StaffSignUp(*entity.StaffSignUpReq) (pb.AuthResponse, error)
 	StaffResetPassword(ctx context.Context, req entity.ReqResetPassword) error
 }

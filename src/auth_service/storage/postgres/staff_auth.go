@@ -31,7 +31,7 @@ func New(db *sqlx.DB) *authRepo {
 }
 
 // check staff by username or phonenumber if exists return role and id
-func (r *authRepo) StaffLogin(req pb.StaffLoginRequest) (pb.AuthResponse, error) {
+func (r *authRepo) StaffLogin(req *entity.StaffLoginReq) (pb.AuthResponse, error) {
 
 	var s staff
 	//Select a staff if it is in db with active status
@@ -61,7 +61,7 @@ func (r *authRepo) StaffLogin(req pb.StaffLoginRequest) (pb.AuthResponse, error)
 }
 
 // Sign up staff with incoming username and default password
-func (r *authRepo) StaffSignUp(req pb.StaffSignUpRequest) (pb.AuthResponse, error) {
+func (r *authRepo) StaffSignUp(req *entity.StaffSignUpReq) (pb.AuthResponse, error) {
 
 	if req.PhoneNumber != "" {
 		s, err := r.signUpWithPhoneNumber(req)
@@ -87,7 +87,7 @@ func (r *authRepo) StaffSignUp(req pb.StaffSignUpRequest) (pb.AuthResponse, erro
 
 }
 
-func (r *authRepo) signUpWithPhoneNumber(req pb.StaffSignUpRequest) (*staff, error) {
+func (r *authRepo) signUpWithPhoneNumber(req *entity.StaffSignUpReq) (*staff, error) {
 	var s staff
 	exists := r.check(req.PhoneNumber, "")
 	if exists {
@@ -121,7 +121,7 @@ func (r *authRepo) signUpWithPhoneNumber(req pb.StaffSignUpRequest) (*staff, err
 	return &s, nil
 }
 
-func (r *authRepo) signUpWithUsername(req pb.StaffSignUpRequest) (*staff, error) {
+func (r *authRepo) signUpWithUsername(req *entity.StaffSignUpReq) (*staff, error) {
 	var s staff
 	exists := r.check("", req.Username)
 	if exists {
