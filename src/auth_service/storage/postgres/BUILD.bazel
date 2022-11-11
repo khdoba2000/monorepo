@@ -6,6 +6,7 @@ go_library(
     importpath = "monorepo/src/auth_service/storage/postgres",
     visibility = ["//visibility:public"],
     deps = [
+        "//src/auth_service/pkg/mappers",
         "//src/idl/auth_service",
         "//src/libs/etc",
         "@com_github_google_uuid//:uuid",

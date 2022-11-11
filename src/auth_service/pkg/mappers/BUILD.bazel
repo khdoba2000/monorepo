@@ -1,0 +1,15 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "mappers",
+    srcs = ["mapper.go"],
+    importpath = "monorepo/src/auth_service/pkg/mappers",
+    visibility = ["//visibility:public"],
+    deps = ["//src/idl/auth_service"],
+)
+
+alias(
+    name = "go_default_library",
+    actual = ":mappers",
+    visibility = ["//visibility:public"],
+)
