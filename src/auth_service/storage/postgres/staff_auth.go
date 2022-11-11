@@ -1,9 +1,9 @@
 package postgres
 
 import (
+	"context"
 	"fmt"
-	"monorepo/src/auth_service/pkg/mappers"
-
+	"monorepo/src/auth_service/pkg/entity"
 	pb "monorepo/src/idl/auth_service"
 	"time"
 
@@ -31,7 +31,7 @@ func New(db *sqlx.DB) *authRepo {
 }
 
 // check staff by username or phonenumber if exists return role and id
-func (r *authRepo) StaffLogin(req *mappers.StaffLoginReq) (pb.AuthResponse, error) {
+func (r *authRepo) StaffLogin(req *entity.StaffLoginReq) (pb.AuthResponse, error) {
 
 	var s staff
 	//Select a staff if it is in db with active status
@@ -61,7 +61,7 @@ func (r *authRepo) StaffLogin(req *mappers.StaffLoginReq) (pb.AuthResponse, erro
 }
 
 // Sign up staff with incoming username and default password
-func (r *authRepo) StaffSignUp(req *mappers.StaffSignUpReq) (pb.AuthResponse, error) {
+func (r *authRepo) StaffSignUp(req *entity.StaffSignUpReq) (pb.AuthResponse, error) {
 
 	if req.PhoneNumber != "" {
 		s, err := r.signUpWithPhoneNumber(req)
@@ -87,7 +87,7 @@ func (r *authRepo) StaffSignUp(req *mappers.StaffSignUpReq) (pb.AuthResponse, er
 
 }
 
-func (r *authRepo) signUpWithPhoneNumber(req *mappers.StaffSignUpReq) (*staff, error) {
+func (r *authRepo) signUpWithPhoneNumber(req *entity.StaffSignUpReq) (*staff, error) {
 	var s staff
 	exists := r.check(req.PhoneNumber, "")
 	if exists {
@@ -121,7 +121,7 @@ func (r *authRepo) signUpWithPhoneNumber(req *mappers.StaffSignUpReq) (*staff, e
 	return &s, nil
 }
 
-func (r *authRepo) signUpWithUsername(req *mappers.StaffSignUpReq) (*staff, error) {
+func (r *authRepo) signUpWithUsername(req *entity.StaffSignUpReq) (*staff, error) {
 	var s staff
 	exists := r.check("", req.Username)
 	if exists {
@@ -175,4 +175,11 @@ func (r *authRepo) check(phoneNumber string, username string) bool {
 	}
 
 	return true
+}
+
+func (r *authRepo) StaffResetPassword(ctx context.Context, req entity.ReqResetPassword) error {
+	_, err := r.db.ExecContext(ctx,
+		`UPDATE staff_auth SET password=$1 WHERE id=$2`,
+		req.NewPassword, req.StaffID)
+	return err
 }

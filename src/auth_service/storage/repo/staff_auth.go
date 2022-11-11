@@ -1,12 +1,14 @@
 package repo
 
 import (
-	"monorepo/src/auth_service/pkg/mappers"
+	"context"
+	"monorepo/src/auth_service/pkg/entity"
 	pb "monorepo/src/idl/auth_service"
 )
 
 // Defining Base interface for Authentication
 type IAuthStorage interface {
-	StaffLogin(*mappers.StaffLoginReq) (pb.AuthResponse, error)
-	StaffSignUp(*mappers.StaffSignUpReq) (pb.AuthResponse, error)
+	StaffLogin(*entity.StaffLoginReq) (pb.AuthResponse, error)
+	StaffSignUp(*entity.StaffSignUpReq) (pb.AuthResponse, error)
+	StaffResetPassword(ctx context.Context, req entity.ReqResetPassword) error
 }

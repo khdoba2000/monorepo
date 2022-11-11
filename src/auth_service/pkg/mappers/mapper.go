@@ -1,37 +1,27 @@
 package mappers
 
 import (
+	"monorepo/src/auth_service/pkg/entity"
 	pb "monorepo/src/idl/auth_service"
 )
 
-type StaffLoginReq struct {
-	Username    string
-	Password    string
-	PhoneNumber string
+func MapProtoLoginReq(req *pb.StaffLoginRequest) *entity.StaffLoginReq {
+	r := &entity.StaffLoginReq{
+		Username:    req.Username,
+		Password:    req.Password,
+		PhoneNumber: req.PhoneNumber,
+	}
+	return r
 }
 
-type StaffSignUpReq struct {
-	Name        string
-	Username    string
-	Password    string
-	PhoneNumber string
-	Role        string
-	BranchId    string
-}
-
-func (s *StaffLoginReq) MapProtoLoginReq(req *pb.StaffLoginRequest) {
-	s.Username = req.Username
-	s.Password = req.Password
-	s.PhoneNumber = req.PhoneNumber
-}
-
-func (s *StaffSignUpReq) MapProtoSignUpReq(req *pb.StaffSignUpRequest) {
-
-	s.Name = req.Name
-	s.Username = req.Username
-	s.Password = req.Password
-	s.PhoneNumber = req.PhoneNumber
-	s.Role = req.Role
-	s.BranchId = req.BranchId
-
+func MapProtoSignUpReq(req *pb.StaffSignUpRequest) *entity.StaffSignUpReq {
+	r := &entity.StaffSignUpReq{
+		Name:        req.Name,
+		Username:    req.Username,
+		Password:    req.Password,
+		PhoneNumber: req.PhoneNumber,
+		Role:        req.Role,
+		BranchId:    req.BranchId,
+	}
+	return r
 }

@@ -4,6 +4,7 @@ import (
 	"context"
 	"database/sql"
 	"errors"
+	"monorepo/src/auth_service/pkg/entity"
 	"monorepo/src/auth_service/pkg/mappers"
 	"monorepo/src/auth_service/storage"
 	pb "monorepo/src/idl/auth_service"
@@ -36,14 +37,7 @@ func New(storage storage.IStorage, logger log.Factory, tracer opentracing.Tracer
 func (as *AuthService) StaffLogin(ctx context.Context, req *pb.StaffLoginRequest) (*pb.AuthResponse, error) {
 
 	// pass incoming request to custom type
-	var r *mappers.StaffLoginReq
-	r.MapProtoLoginReq(req)
-
-	// r := &mappers.StaffLoginReq{
-	// 	Username:    req.Username,
-	// 	Password:    req.Password,
-	// 	PhoneNumber: req.PhoneNumber,
-	// }
+	r := mappers.MapProtoLoginReq(req)
 
 	as.logger.For(ctx).Info("StaffLogin started", zap.String("PhoneNumber", req.PhoneNumber), zap.String("Username", req.Username))
 
@@ -60,17 +54,7 @@ func (as *AuthService) StaffLogin(ctx context.Context, req *pb.StaffLoginRequest
 func (as *AuthService) StaffSignUp(ctx context.Context, req *pb.StaffSignUpRequest) (*pb.AuthResponse, error) {
 
 	// pass incoming request to custom type
-	var r *mappers.StaffSignUpReq
-	r.MapProtoSignUpReq(req)
-
-	// r := &mappers.StaffSignUpReq{
-	// 	Name:        req.Name,
-	// 	Username:    req.Username,
-	// 	Password:    req.Password,
-	// 	PhoneNumber: req.PhoneNumber,
-	// 	Role:        req.Role,
-	// 	BranchId:    req.BranchId,
-	// }
+	r := mappers.MapProtoSignUpReq(req)
 
 	as.logger.For(ctx).Info("StaffSignUp started", zap.String("PhoneNumber", req.PhoneNumber), zap.String("Username", req.Username))
 	// if span := opentracing.SpanFromContext(ctx); span != nil {
@@ -97,4 +81,22 @@ func (as *AuthService) StaffSignUp(ctx context.Context, req *pb.StaffSignUpReque
 	as.logger.For(ctx).Info("StaffSignUp finished", zap.String("PhoneNumber", req.PhoneNumber), zap.String("Username", req.Username))
 
 	return &res, nil
+}
+
+func (as *AuthService) StaffResetPassword(ctx context.Context, req *pb.StaffResetPasswordRequest) (*pb.Empty, error) {
+	as.logger.For(ctx).Info("StaffResetPassword started", zap.String("StaffID", req.StaffID))
+
+	err := as.storage.Authenitication().StaffResetPassword(ctx, entity.ReqResetPassword{
+		StaffID:     req.StaffID,
+		NewPassword: req.NewPassword,
+	})
+
+	if err != nil {
+		as.logger.For(ctx).Error("failed to reset staff's password", zap.Error(err))
+		return &pb.Empty{}, status.Error(codes.Internal, err.Error())
+	}
+
+	as.logger.For(ctx).Info("StaffResetPassword finished", zap.String("StaffID", req.StaffID))
+
+	return &pb.Empty{}, nil
 }

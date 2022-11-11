@@ -7,6 +7,7 @@ go_library(
     visibility = ["//visibility:public"],
     deps = [
         "//src/auth_service/pkg/mappers",
+        "//src/auth_service/pkg/entity",
         "//src/auth_service/storage",
         "//src/idl/auth_service",
         "//src/libs/log",
