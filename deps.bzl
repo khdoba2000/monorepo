@@ -1232,6 +1232,13 @@ def go_dependencies():
         sum = "h1:gm3vOOXfiuw5i9p5N9xJvfjvuofpyvLA9Wr6QfK5Fng=",
         version = "v0.19.14",
     )
+    go_repository(
+        name = "com_github_go_ozzo_ozzo_validation_v3",
+        build_file_proto_mode = "disable_global",
+        importpath = "github.com/go-ozzo/ozzo-validation/v3",
+        sum = "h1:PcDzf3lgoWlFW8cxEpqD04zmRczXjn1CUN/AFPUJZK8=",
+        version = "v3.8.1",
+    )
 
     go_repository(
         name = "com_github_go_playground_assert_v2",
@@ -3858,6 +3865,13 @@ def go_dependencies():
         importpath = "gopkg.in/alecthomas/kingpin.v2",
         sum = "h1:jMFz6MfLP0/4fUyZle81rXUoxOBFi19VUFKVDOQfozc=",
         version = "v2.2.6",
+    )
+    go_repository(
+        name = "in_gopkg_asaskevich_govalidator_v9",
+        build_file_proto_mode = "disable_global",
+        importpath = "gopkg.in/asaskevich/govalidator.v9",
+        sum = "h1:RVvpqSdNKxt6sENjmw0kdyyv8r18TdpmYTrvUUg2qkc=",
+        version = "v9.0.0-20180315120708-ccb8e960c48f",
     )
 
     go_repository(

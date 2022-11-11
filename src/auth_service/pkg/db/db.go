@@ -2,14 +2,15 @@ package db
 
 import (
 	"fmt"
+	"log"
+	"monorepo/src/auth_service/configs"
+
 	"github.com/golang-migrate/migrate/v4"
 	_ "github.com/golang-migrate/migrate/v4/database"
 	_ "github.com/golang-migrate/migrate/v4/database/postgres"
 	_ "github.com/golang-migrate/migrate/v4/source/file"
 	_ "github.com/joho/godotenv/autoload" // load .env file automatically
 	"go.uber.org/zap"
-	"log"
-	"monorepo/src/auth_service/configs"
 
 	_ "github.com/lib/pq"
 
@@ -20,7 +21,7 @@ import (
 func Init(config configs.Configuration) (*sqlx.DB, error) {
 
 	dbURL := fmt.Sprintf("postgres://%s:%s@%s:%d/%s?sslmode=disable", config.PostgresUser, config.PostgresPassword, config.PostgresHost, config.PostgresPort, config.PostgresDatabase)
-	m, err := migrate.New("file://pkg/db/migrations", dbURL)
+	m, err := migrate.New("file://src/auth_service/pkg/db/migrations", dbURL)
 	if err != nil {
 		log.Fatal("error in creating migrations: ", zap.Error(err))
 	}
