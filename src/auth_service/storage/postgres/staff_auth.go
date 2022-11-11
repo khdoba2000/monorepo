@@ -1,7 +1,9 @@
 package postgres
 
 import (
+	"context"
 	"fmt"
+	"monorepo/src/auth_service/pkg/entity"
 	pb "monorepo/src/idl/auth_service"
 	"time"
 
@@ -173,4 +175,11 @@ func (r *authRepo) check(phoneNumber string, username string) bool {
 	}
 
 	return true
+}
+
+func (r *authRepo) StaffResetPassword(ctx context.Context, req entity.ReqResetPassword) error {
+	_, err := r.db.ExecContext(ctx,
+		`UPDATE staff_auth SET password=$1 WHERE id=$2`,
+		req.NewPassword, req.StaffID)
+	return err
 }

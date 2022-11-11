@@ -5,7 +5,10 @@ go_library(
     srcs = ["staff_auth.go"],
     importpath = "monorepo/src/auth_service/storage/repo",
     visibility = ["//visibility:public"],
-    deps = ["//src/idl/auth_service"],
+    deps = [
+        "//src/auth_service/pkg/entity",
+        "//src/idl/auth_service",
+    ],
 )
 
 alias(
