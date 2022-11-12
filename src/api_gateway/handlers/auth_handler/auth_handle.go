@@ -39,7 +39,7 @@ func New(logger log.Factory) AuthHandlers {
 	return &authHandler{
 		logger:     logger,
 		authClient: dependencies.AuthServiceClient(),
-		// redisDB: rdDB, //TODO must be impilimented
+		redisDB:    dependencies.NewRedisConn(),
 	}
 }
 
@@ -125,7 +125,7 @@ func (ah *authHandler) ResetPassword(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// sending password and satff id to auth_service to update existing password to news one in database
-	_, err = ah.authClient.StaffResetPassword(context.Background(), &auth_service.StaffResetPasswordRequest{
+	_, err = ah.authClient.StaffResetPassword(r.Context(), &auth_service.StaffResetPasswordRequest{
 		StaffID:     "", // staff id should be taken from token
 		NewPassword: string(hashedPassword),
 	})
@@ -142,7 +142,7 @@ func (ah *authHandler) ResetPassword(w http.ResponseWriter, r *http.Request) {
 func (ah *authHandler) SendCodeHandler(w http.ResponseWriter, r *http.Request) {
 	// read body from request
 	var body models.ReqSendCode
-	if err := utils.BodyParser(r, body); err != nil {
+	if err := utils.BodyParser(r, &body); err != nil {
 		utils.HandleBadRequestErrWithMessage(w, err, "invalid body")
 		return
 	}
@@ -176,7 +176,7 @@ func (ah *authHandler) VerfyCodeHandler(w http.ResponseWriter, r *http.Request) 
 
 	// read body from request
 	var body models.ReqCheckCode
-	if err := utils.BodyParser(r, body); err != nil {
+	if err := utils.BodyParser(r, &body); err != nil {
 		utils.HandleBadRequestErrWithMessage(w, err, "invalid body")
 		return
 	}
@@ -195,13 +195,14 @@ func (ah *authHandler) VerfyCodeHandler(w http.ResponseWriter, r *http.Request) 
 	}
 
 	// if the login value is incorrect or wasn't set before throw an error
-	v, ok := i.(string)
-	if !ok || v == "" {
+	v, ok := i.([]byte)
+	if !ok || string(v) == "" {
 		utils.HandleBadRequestResponse(w, "phone number is incorrect")
 		return
 	}
+
 	// if the code is incorrect throw an error
-	if body.Code != v || body.Code != "7777" {
+	if body.Code != string(v) || body.Code != "7777" {
 		utils.HandleBadRequestResponse(w, "code is incorrect")
 		return
 	}

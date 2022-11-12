@@ -2,12 +2,17 @@ load("@io_bazel_rules_go//go:def.bzl", "go_library")
 
 go_library(
     name = "dependencies",
-    srcs = ["grpc_connections.go"],
+    srcs = [
+        "grpc_connections.go",
+        "redis_connection.go",
+    ],
     importpath = "monorepo/src/api_gateway/dependencies",
     visibility = ["//visibility:public"],
     deps = [
         "//src/api_gateway/configs",
         "//src/idl/auth_service",
+        "//src/libs/redis",
+        "@com_github_gomodule_redigo//redis",
         "@com_github_opentracing_contrib_go_grpc//:go-grpc",
         "@com_github_opentracing_opentracing_go//:opentracing-go",
         "@org_golang_google_grpc//:go_default_library",

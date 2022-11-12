@@ -36,7 +36,7 @@ type Configuration struct {
 	RefreshPasswdTokenDuration time.Duration
 
 	RedisHost       string
-	RedisPort       int
+	RedisPort       string
 	AuthServiceHost string
 	AuthServicePort int
 
@@ -78,7 +78,7 @@ func load() *Configuration {
 	config.JWTSecretKeyExpireMinutes = v.GetInt("JWT_SECRET_KEY_EXPIRE_MINUTES_COUNT")
 	config.JWTRefreshKeyExpireHours = v.GetInt("JWT_REFRESH_KEY_EXPIRE_HOURS_COUNT")
 	config.RedisHost = v.GetString("REDIS_HOST")
-	config.RedisPort = v.GetInt("REDIS_PORT")
+	config.RedisPort = v.GetString("REDIS_PORT")
 	config.AuthServiceHost = v.GetString("AUTH_SERVICE_HOST")
 	config.AuthServicePort = v.GetInt("AUTH_SERVICE_PORT")
 	config.CtxTimeout = v.GetInt("CONTEXT_TIMEOUT")
