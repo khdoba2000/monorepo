@@ -39,14 +39,14 @@ func (as *AuthService) StaffLogin(ctx context.Context, req *pb.StaffLoginRequest
 	// pass incoming request to custom type
 	r := mappers.MapProtoLoginReq(req)
 
-	as.logger.For(ctx).Info("StaffLogin started", zap.String("PhoneNumber", req.PhoneNumber), zap.String("Username", req.Username))
+	as.logger.For(ctx).Info("StaffLogin started", zap.String("PhoneNumber", r.PhoneNumber), zap.String("Username", r.Username))
 
-	res, err := as.storage.Authenitication().StaffLogin(r)
+	res, err := as.storage.Authenitication().StaffLogin(ctx, r)
 	if err != nil {
 		as.logger.For(ctx).Error("failed to staff login username or password didn't match", zap.Error(err))
 		return nil, status.Error(codes.Unauthenticated, "username or password is incorrect")
 	}
-	as.logger.For(ctx).Info("StaffLogin finished", zap.String("PhoneNumber", req.PhoneNumber), zap.String("Username", req.Username))
+	as.logger.For(ctx).Info("StaffLogin finished", zap.String("PhoneNumber", r.PhoneNumber), zap.String("Username", r.Username))
 
 	return &res, nil
 }
@@ -56,7 +56,7 @@ func (as *AuthService) StaffSignUp(ctx context.Context, req *pb.StaffSignUpReque
 	// pass incoming request to custom type
 	r := mappers.MapProtoSignUpReq(req)
 
-	as.logger.For(ctx).Info("StaffSignUp started", zap.String("PhoneNumber", req.PhoneNumber), zap.String("Username", req.Username))
+	as.logger.For(ctx).Info("StaffSignUp started", zap.String("PhoneNumber", r.PhoneNumber), zap.String("Username", r.Username))
 	// if span := opentracing.SpanFromContext(ctx); span != nil {
 	// 	span := as.tracer.StartSpan("Query database", opentracing.ChildOf(span.Context()))
 	// 	span.SetTag("param.phoneNumber", req.PhoneNumber)
@@ -66,7 +66,7 @@ func (as *AuthService) StaffSignUp(ctx context.Context, req *pb.StaffSignUpReque
 	// 	ctx = opentracing.ContextWithSpan(ctx, span)
 	// }
 
-	res, err := as.storage.Authenitication().StaffSignUp(r)
+	res, err := as.storage.Authenitication().StaffSignUp(ctx, r)
 
 	if errors.Is(err, bcrypt.ErrHashTooShort) {
 		as.logger.For(ctx).Error("failed to generate default password hash", zap.Error(err))
@@ -78,7 +78,7 @@ func (as *AuthService) StaffSignUp(ctx context.Context, req *pb.StaffSignUpReque
 		as.logger.For(ctx).Error("username is already signed up", zap.Error(err))
 		return nil, status.Error(codes.AlreadyExists, "user is already signed up")
 	}
-	as.logger.For(ctx).Info("StaffSignUp finished", zap.String("PhoneNumber", req.PhoneNumber), zap.String("Username", req.Username))
+	as.logger.For(ctx).Info("StaffSignUp finished", zap.String("PhoneNumber", r.PhoneNumber), zap.String("Username", r.Username))
 
 	return &res, nil
 }

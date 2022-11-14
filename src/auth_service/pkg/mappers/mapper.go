@@ -5,8 +5,8 @@ import (
 	pb "monorepo/src/idl/auth_service"
 )
 
-func MapProtoLoginReq(req *pb.StaffLoginRequest) *entity.StaffLoginReq {
-	r := &entity.StaffLoginReq{
+func MapProtoLoginReq(req *pb.StaffLoginRequest) entity.StaffLoginReq {
+	r := entity.StaffLoginReq{
 		Username:    req.Username,
 		Password:    req.Password,
 		PhoneNumber: req.PhoneNumber,
@@ -14,8 +14,8 @@ func MapProtoLoginReq(req *pb.StaffLoginRequest) *entity.StaffLoginReq {
 	return r
 }
 
-func MapProtoSignUpReq(req *pb.StaffSignUpRequest) *entity.StaffSignUpReq {
-	r := &entity.StaffSignUpReq{
+func MapProtoSignUpReq(req *pb.StaffSignUpRequest) entity.StaffSignUpReq {
+	r := entity.StaffSignUpReq{
 		Name:        req.Name,
 		Username:    req.Username,
 		Password:    req.Password,
