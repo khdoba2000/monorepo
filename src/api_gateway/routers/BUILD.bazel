@@ -3,7 +3,7 @@ load("@io_bazel_rules_go//go:def.bzl", "go_library")
 go_library(
     name = "routers",
     srcs = [
-        "auth-router.go",
+        "auth_router.go",
         "customer_router.go",
     ],
     importpath = "monorepo/src/api_gateway/routers",
