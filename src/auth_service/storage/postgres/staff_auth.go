@@ -31,12 +31,12 @@ func New(db *sqlx.DB) *authRepo {
 }
 
 // check staff by username or phonenumber if exists return role and id
-func (r *authRepo) StaffLogin(req *entity.StaffLoginReq) (pb.AuthResponse, error) {
+func (r *authRepo) StaffLogin(ctx context.Context, req entity.StaffLoginReq) (pb.AuthResponse, error) {
 
 	var s staff
 	//Select a staff if it is in db with active status
-	err := r.db.QueryRow(`
-		SELECT id, branch_id,  password, role FROM staff_auth WHERE is_active=true AND ( phone_number = $1 OR username = $2) `,
+	err := r.db.QueryRowContext(ctx,
+		`SELECT id, branch_id,  password, role FROM staff_auth WHERE is_active=true AND ( phone_number = $1 OR username = $2) `,
 		req.PhoneNumber, req.Username).Scan(
 		&s.Id,
 		&s.BranchId,
@@ -61,10 +61,10 @@ func (r *authRepo) StaffLogin(req *entity.StaffLoginReq) (pb.AuthResponse, error
 }
 
 // Sign up staff with incoming username and default password
-func (r *authRepo) StaffSignUp(req *entity.StaffSignUpReq) (pb.AuthResponse, error) {
+func (r *authRepo) StaffSignUp(ctx context.Context, req entity.StaffSignUpReq) (pb.AuthResponse, error) {
 
 	if req.PhoneNumber != "" {
-		s, err := r.signUpWithPhoneNumber(req)
+		s, err := r.signUpWithPhoneNumber(ctx, req)
 		if err != nil {
 			return pb.AuthResponse{}, err
 		}
@@ -75,7 +75,7 @@ func (r *authRepo) StaffSignUp(req *entity.StaffSignUpReq) (pb.AuthResponse, err
 		}, nil
 
 	}
-	s, err := r.signUpWithUsername(req)
+	s, err := r.signUpWithUsername(ctx, req)
 	if err != nil {
 		return pb.AuthResponse{}, err
 	}
@@ -87,9 +87,9 @@ func (r *authRepo) StaffSignUp(req *entity.StaffSignUpReq) (pb.AuthResponse, err
 
 }
 
-func (r *authRepo) signUpWithPhoneNumber(req *entity.StaffSignUpReq) (*staff, error) {
+func (r *authRepo) signUpWithPhoneNumber(ctx context.Context, req entity.StaffSignUpReq) (*staff, error) {
 	var s staff
-	exists := r.check(req.PhoneNumber, "")
+	exists := r.check(ctx, req.PhoneNumber, "")
 	if exists {
 		return &staff{}, fmt.Errorf("user with the phone number %s is already exist", req.PhoneNumber)
 	}
@@ -100,8 +100,8 @@ func (r *authRepo) signUpWithPhoneNumber(req *entity.StaffSignUpReq) (*staff, er
 		return &staff{}, fmt.Errorf("password hash error: %w", bcrypt.ErrHashTooShort)
 	}
 
-	err = r.db.QueryRow(`
-		INSERT INTO staff_auth(id, phone_number, name, role, password, branch_id, create_date, update_date)
+	err = r.db.QueryRowContext(ctx,
+		`INSERT INTO staff_auth(id, phone_number, name, role, password, branch_id, create_date, update_date)
 		VALUES($1, $2, $3, $4, $5, $6, $7, $8) RETURNING id, branch_id, role`,
 		uuid.New(),
 		req.PhoneNumber,
@@ -121,9 +121,9 @@ func (r *authRepo) signUpWithPhoneNumber(req *entity.StaffSignUpReq) (*staff, er
 	return &s, nil
 }
 
-func (r *authRepo) signUpWithUsername(req *entity.StaffSignUpReq) (*staff, error) {
+func (r *authRepo) signUpWithUsername(ctx context.Context, req entity.StaffSignUpReq) (*staff, error) {
 	var s staff
-	exists := r.check("", req.Username)
+	exists := r.check(ctx, "", req.Username)
 	if exists {
 		return &staff{}, fmt.Errorf("user with the username: %s is already exist", req.Username)
 	}
@@ -134,8 +134,8 @@ func (r *authRepo) signUpWithUsername(req *entity.StaffSignUpReq) (*staff, error
 		return &staff{}, fmt.Errorf("error when generating password hash")
 	}
 
-	err = r.db.QueryRow(`
-		INSERT INTO staff_auth(id, phone_number, name, role, password, branch_id, create_date, update_date)
+	err = r.db.QueryRowContext(ctx,
+		`INSERT INTO staff_auth(id, phone_number, name, role, password, branch_id, create_date, update_date)
 		VALUES($1, $2, $3, $4, $5, $6, $7, $8) RETURNING id, branch_id, role`,
 		uuid.New(),
 		req.PhoneNumber,
@@ -157,12 +157,12 @@ func (r *authRepo) signUpWithUsername(req *entity.StaffSignUpReq) (*staff, error
 }
 
 // checks if active user exists or not in db by username or password
-func (r *authRepo) check(phoneNumber string, username string) bool {
+func (r *authRepo) check(ctx context.Context, phoneNumber string, username string) bool {
 
 	var exists bool
 	if phoneNumber != "" {
-		if err := r.db.QueryRow(`
-				SELECT EXISTS(SELECT 1 FROM staff_auth WHERE phone_number = $1 AND is_active = true)
+		if err := r.db.QueryRowContext(ctx,
+			`SELECT EXISTS(SELECT 1 FROM staff_auth WHERE phone_number = $1 AND is_active = true)
 			`, phoneNumber).Scan(&exists); err != nil {
 			return false
 		}
